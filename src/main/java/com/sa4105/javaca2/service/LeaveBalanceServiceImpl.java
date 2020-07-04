@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sa4105.javaca2.model.Leave;
 import com.sa4105.javaca2.model.LeaveBalance;
 import com.sa4105.javaca2.model.User;
 import com.sa4105.javaca2.repo.LeaveBalanceRepository;
@@ -62,7 +63,7 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 		// TODO Auto-generated method stub
 		System.out.println("Leave Type Id - " + leavetypeid + " User Id -" + userid);
 		double leaveqty;
-		LeaveBalance leavebalance = lbrepo.findLeaveBalanceByNativeQuery(leavetypeid, userid);
+		LeaveBalance leavebalance = lbrepo.findLeaveBalance(leavetypeid, userid);
 		//LeaveBalance leavebalance = lbrepo.findLeaveBalance(leavetypeid, userid);
 		
 		if (leavebalance != null ) {
@@ -80,6 +81,20 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 		leavebalance.setLeaveQuantity(leaveqty);
 		lbrepo.save(leavebalance);	
 		
+	}
+
+	@Override
+	public LeaveBalance findLeaveBalanceByUserIdandRoleId(int userid, int leavetypeid) {
+		System.out.println(" List of Leave Balances - "+lbrepo.findLeaveBalance(leavetypeid, userid));
+		if (lbrepo.findLeaveBalance(leavetypeid, userid) != null ) {
+			return lbrepo.findLeaveBalance(leavetypeid, userid);
+		}
+		return null;
+	}
+
+	@Override
+	public boolean saveLeaveBalance(LeaveBalance leavebalance) {
+		if(lbrepo.save(leavebalance)!=null) return true; else return false;
 	}
 
 }
