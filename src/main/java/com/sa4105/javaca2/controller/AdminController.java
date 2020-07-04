@@ -115,7 +115,7 @@ public class AdminController {
 		user.setRole(r);
 		uservice.createUser(user);
 		model.addAttribute("user",user);
-		return "redirect:/admin/{username}";
+		return "redirect:/admin/{username}" + "/summary";
 	}
 	
 	@PostMapping("/{username}/saverole")
@@ -262,6 +262,14 @@ public class AdminController {
 	public String DeleteRole(Model model, @PathVariable("username") String username, @PathVariable("id") Integer id, HttpSession session) {
 		rservice.deleteRole(rservice.findRoleById(id));
 		return "redirect:/admin/" + username +"/rolesummary";
+	}
+	
+	@GetMapping("/{username}/deleteuser/{id}")
+	public String DeleteUser(Model model, @PathVariable("username") String username, @PathVariable("id") Integer id, HttpSession session) {
+		
+		User user = uservice.findUserById(id);
+		uservice.deleteUser(user);
+		return "redirect:/admin/" + username +"/summary";
 	}
 	
 	
