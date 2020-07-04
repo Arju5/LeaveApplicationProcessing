@@ -1,7 +1,5 @@
 package com.sa4105.javaca2.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;

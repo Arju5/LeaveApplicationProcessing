@@ -71,7 +71,7 @@ public class DBSeeder {
 	LeaveType leavetype9 = new LeaveType(role3,"Compensation");
 	User user1 = new User("1234","Khiong Kiat", "Chua",role1,"darell1");
 	User user2 = new User("1234","Yamone", "Shwe",role2,"yamone");
-	User user3 = new User("1234","Rohan", "Ninad Matre", role3,"rohan");
+	User user3 = new User("1234","Rohan", "Mhatre",role3,"rohan");
 	User user4 = new User("1234","Sheryl", "Teo", role1,"sheryl");
 	Leave leave1 = new Leave(user1, LocalDate.of(2020, 07, 02), LocalDate.of(2020, 07, 03), LocalDate.of(2020, 06, 30), "Head ache", leavetype1, LeaveSession.AM, LeaveSession.PM, LeaveStatus.APPLIED);
 	Leave leave2 = new Leave(user1, LocalDate.of(2020, 07, 06), LocalDate.of(2020, 07, 07), LocalDate.of(2020, 06, 30), "Stomach pain", leavetype2, LeaveSession.AM, LeaveSession.PM, LeaveStatus.APPLIED);
@@ -88,6 +88,9 @@ public class DBSeeder {
 	LeaveBalance leaveBalance7 = new LeaveBalance(user4, leavetype1, 60);
 	LeaveBalance leaveBalance8 = new LeaveBalance(user4, leavetype2, 12);
 	LeaveBalance leaveBalance9 = new LeaveBalance(user4, leavetype3, (long) 2.5);
+	LeaveBalance leaveBalance10 = new LeaveBalance(user3, leavetype7, leavetype7.getMaxLeaveDuration());
+	LeaveBalance leaveBalance11 = new LeaveBalance(user3, leavetype8, leavetype8.getMaxLeaveDuration());
+	LeaveBalance leaveBalance12 = new LeaveBalance(user3, leavetype9, 3.5);
 	PublicHoliday publicholiday1 = new PublicHoliday("Christmas",LocalDate.of(2020, 12, 25));
 	PublicHoliday publicholiday2 = new PublicHoliday("National Day",LocalDate.of(2020, 8, 10));
 	PublicHoliday publicholiday3 = new PublicHoliday("Labor Day",LocalDate.of(2020, 4, 01));
@@ -124,6 +127,9 @@ public class DBSeeder {
 		lbservice.createLeaveBalance(leaveBalance7);
 		lbservice.createLeaveBalance(leaveBalance8);
 		lbservice.createLeaveBalance(leaveBalance9);
+		lbservice.createLeaveBalance(leaveBalance10);
+		lbservice.createLeaveBalance(leaveBalance11);
+		lbservice.createLeaveBalance(leaveBalance12);
 		phservice.createPublicHoliday(publicholiday1);
 		phservice.createPublicHoliday(publicholiday2);
 		phservice.createPublicHoliday(publicholiday3);
