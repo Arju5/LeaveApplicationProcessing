@@ -92,21 +92,22 @@ public class UserController {
 	@RequestMapping("/{username}/leave/save")
 	public String SaveLeave(@ModelAttribute @Valid Leave leave, BindingResult bindingResult, @PathVariable("username") String username, HttpSession session, Model model) {
 		System.out.println(bindingResult.getAllErrors());
-		if(bindingResult.hasErrors()) {
-			model.addAttribute("leave",	leave);
-			return "leaveform";
-		}
+		
 		System.out.println(leave.getStartDate());
 		leave.setLeaveStartDate(LocalDate.parse(leave.getStartDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		leave.setLeaveEndDate(LocalDate.parse(leave.getEndDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		leave.setApplyLeaveDate(LocalDate.now());
 		leave.setStartLeaveSession(LeaveSession.valueOf(leave.getStartSession()));
 		leave.setEndLeaveSession(LeaveSession.valueOf(leave.getEndSession()));
-		System.out.println(leave.getUser());
-		System.out.println(leave.getLeaveType().getLeaveTypeName());
 		leave.setUser((User)session.getAttribute("user"));
 		leave.setLeaveType(ltservice.findLeaveTypeByNameandRoleId(leave.getLeaveType().getLeaveTypeName(), (int)session.getAttribute("roleid")));
 		leave.setLeaveStatus(LeaveStatus.APPLIED);
+		System.out.println(lservice.getLeaveDuration(leave));
+		Double leaveduration = lservice.getLeaveDuration(leave);
+		if(bindingResult.hasErrors() || leaveduration == 0.0) {
+			model.addAttribute("leave",	leave);
+			return "leaveform";
+		}
 		if (lservice.createLeave(leave)) {
 			model.addAttribute("leaves", lservice.findLeaveByUserName((String)session.getAttribute("username")));
 			return "leavelist";
@@ -114,7 +115,6 @@ public class UserController {
 			model.addAttribute("leave",	leave);
 			return "leaveform";
 		}
-		
 	}
 
 	@GetMapping("/{username}/leavelist")

@@ -3,6 +3,7 @@ package com.sa4105.javaca2.service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,14 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sa4105.javaca2.model.Leave;
+import com.sa4105.javaca2.model.LeaveSession;
 import com.sa4105.javaca2.model.LeaveStatus;
+import com.sa4105.javaca2.model.PublicHoliday;
 import com.sa4105.javaca2.repo.LeaveRepository;
+import com.sa4105.javaca2.repo.PublicHolidayRepository;
 
 @Service
 public class LeaveServiceImpl implements LeaveService {
 
 	@Autowired
 	LeaveRepository lrepo;
+	
+	@Autowired
+	private PublicHolidayRepository phrepo;
 	
 	@Override
 	public ArrayList<Leave> findAll() {
@@ -125,6 +132,61 @@ public class LeaveServiceImpl implements LeaveService {
 		// TODO Auto-generated method stub
 		List<Leave> leavelist = lrepo.findLeavebyApplyDate(applyDate);
 		return leavelist;
+	}
+
+	@Override
+	public double getLeaveDuration(Leave leave) {
+		Double leaveduration=0.0;
+		LocalDate startDate = leave.getLeaveStartDate();
+		LocalDate endDate = leave.getLeaveEndDate();
+		int start = startDate.getDayOfWeek().getValue();
+		int end = endDate.getDayOfWeek().getValue();
+		System.out.println(leave.getStartLeaveSession() + " - " + leave.getEndLeaveSession());
+		System.out.println(startDate + " - " + endDate);
+		// Finding the duration of the two dates including the AM and PM
+		if(leave.getStartLeaveSession() == LeaveSession.PM && leave.getEndLeaveSession() == LeaveSession.AM && startDate.isEqual(endDate))
+			return leaveduration;
+		else {
+			leaveduration = (double)ChronoUnit.DAYS.between(startDate, endDate);
+			if(leave.getStartLeaveSession() == LeaveSession.AM) {
+			    System.out.println("Total number of days between dates:" + leaveduration);
+			    if (endDate.isAfter(startDate)) {
+			    	if (leaveduration > 0 && leave.getEndLeaveSession() == LeaveSession.AM) {
+				    	leaveduration += 0.5;
+				    } else if (leaveduration > 0 && leave.getEndLeaveSession() == LeaveSession.PM) {
+				    	leaveduration += 1;
+				    } else if (leaveduration == 0 && leave.getEndLeaveSession() == LeaveSession.PM) {
+				    	leaveduration = 1.0;
+				    }
+			    } else if (startDate.isEqual(endDate)) {
+			    	leaveduration = 1.0;
+			    }
+			} else if (leave.getStartLeaveSession() == LeaveSession.PM && (endDate.isAfter(startDate))) { 
+				if (leave.getEndLeaveSession() == LeaveSession.PM)
+					leaveduration += 0.5;
+			}
+		}
+		// Getting the list of Public Holidays
+		List<PublicHoliday> publicHolidays = phrepo.findAll();
+		List<LocalDate> phDateList = new ArrayList<LocalDate>();
+		for (Iterator<PublicHoliday> iterator = publicHolidays.iterator(); iterator.hasNext();) {
+			PublicHoliday publicHoliday = (PublicHoliday) iterator.next();
+			phDateList.add(publicHoliday.getPhDate());
+		}	
+		
+		if(leaveduration <= 14) {
+			//Checking for weekends and public holidays
+			LocalDate iter = startDate;
+			do {
+				System.out.println(iter);
+				// if day found in list of public holidays or weekdays then decrement by one
+				if (phDateList.contains(iter) || iter.getDayOfWeek().getValue() == 6 || iter.getDayOfWeek().getValue() == 7)
+					leaveduration -= 1;
+				iter=iter.plusDays(1);
+				System.out.println("Duration - " + leaveduration);
+			} while(iter.isBefore(endDate));
+		}
+		return leaveduration;
 	}
 
 	/*
