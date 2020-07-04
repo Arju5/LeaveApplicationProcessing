@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.sa4105.javaca2.model.Leave;
 import com.sa4105.javaca2.model.LeaveSession;
 import com.sa4105.javaca2.model.LeaveStatus;
+import com.sa4105.javaca2.model.LeaveType;
 import com.sa4105.javaca2.model.LeaveUpdate;
 import com.sa4105.javaca2.model.User;
 import com.sa4105.javaca2.service.LeaveBalanceService;
@@ -137,21 +138,26 @@ public class UserController {
 
 	@RequestMapping(value = "/{username}/updateleave", method = RequestMethod.POST)
 	public String UpdateLeave(@PathVariable("username") String username, @RequestBody LeaveUpdate leaveUpdate,
-			HttpServletRequest request) {
+			HttpSession session,HttpServletRequest request) {
+		
 		System.out.println("Leave Update with Json");
+		int roleid = (int)session.getAttribute("roleid");
+		
+		LeaveType ltype = ltservice.findLeaveTypeByNameandRoleId(leaveUpdate.leaveType, roleid);
+		System.out.println("Ltype::  "+ltype.getId());
 		Leave l = lservice.findLeaveById(leaveUpdate.id);
-		l.getLeaveType().setLeaveTypeName(leaveUpdate.leaveType);
-
-		System.out.println(l.getLeaveType().getLeaveTypeName());
+		l.setLeaveType(ltype);
 		l.setLeaveStartDate(leaveUpdate.leaveStartDate);
 		l.setLeaveEndDate(leaveUpdate.leaveEndDate);
 		l.setLeaveReason(leaveUpdate.leaveReason);
-
+		//System.out.println(l.getLeaveType().getLeaveTypeName());
 		lservice.editLeave(l);
 		lservice.updatedLeaveApplication(l);
 		System.out.println("Saved");
-
-		return "forward:/user/{username}/leavelist";
+		
+		String success = "sucesss";
+		return success;
+		//return "forward:/user/{username}/leavelist";
 	}
 	
 	@RequestMapping(value = "/{username}/deleteLeave/{id}")

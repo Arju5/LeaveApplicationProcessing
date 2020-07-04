@@ -1,6 +1,5 @@
 package com.sa4105.javaca2.controller;
 
-
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +91,12 @@ public class DBSeeder {
 	PublicHoliday publicholiday2 = new PublicHoliday("National Day",LocalDate.of(2020, 8, 10));
 	PublicHoliday publicholiday3 = new PublicHoliday("Labor Day",LocalDate.of(2020, 4, 01));
 
+	LeaveBalance leaveBalance10 = new LeaveBalance(user3, leavetype7, leavetype7.getMaxLeaveDuration());
+	LeaveBalance leaveBalance11 = new LeaveBalance(user3, leavetype8, leavetype8.getMaxLeaveDuration());
+	LeaveBalance leaveBalance12 = new LeaveBalance(user3, leavetype9, 3.5);
+
+
+
 	@GetMapping("")
 	public String Main(@ModelAttribute("user") User user) {
 		rservice.createRole(role1);
@@ -105,6 +110,7 @@ public class DBSeeder {
 		ltservice.createLeaveType(leavetype6);
 		ltservice.createLeaveType(leavetype7);
 		ltservice.createLeaveType(leavetype8);
+		ltservice.createLeaveType(leavetype9);
 		uservice.createUser(user1);
 		uservice.createUser(user2);
 		uservice.createUser(user3);
@@ -124,6 +130,9 @@ public class DBSeeder {
 		lbservice.createLeaveBalance(leaveBalance7);
 		lbservice.createLeaveBalance(leaveBalance8);
 		lbservice.createLeaveBalance(leaveBalance9);
+		lbservice.createLeaveBalance(leaveBalance10);
+		lbservice.createLeaveBalance(leaveBalance11);
+		lbservice.createLeaveBalance(leaveBalance12);
 		phservice.createPublicHoliday(publicholiday1);
 		phservice.createPublicHoliday(publicholiday2);
 		phservice.createPublicHoliday(publicholiday3);
