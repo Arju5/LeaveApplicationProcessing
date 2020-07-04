@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sa4105.javaca2.model.Leave;
+import com.sa4105.javaca2.model.LeaveBalance;
 import com.sa4105.javaca2.model.LeaveSession;
 import com.sa4105.javaca2.model.LeaveStatus;
 import com.sa4105.javaca2.model.PublicHoliday;
@@ -139,8 +140,6 @@ public class LeaveServiceImpl implements LeaveService {
 		Double leaveduration=0.0;
 		LocalDate startDate = leave.getLeaveStartDate();
 		LocalDate endDate = leave.getLeaveEndDate();
-		int start = startDate.getDayOfWeek().getValue();
-		int end = endDate.getDayOfWeek().getValue();
 		System.out.println(leave.getStartLeaveSession() + " - " + leave.getEndLeaveSession());
 		System.out.println(startDate + " - " + endDate);
 		// Finding the duration of the two dates including the AM and PM
@@ -159,7 +158,10 @@ public class LeaveServiceImpl implements LeaveService {
 				    	leaveduration = 1.0;
 				    }
 			    } else if (startDate.isEqual(endDate)) {
-			    	leaveduration = 1.0;
+			    	if (leave.getEndLeaveSession() == LeaveSession.AM && leave.getLeaveTypeName() == "Compensation")
+			    		leaveduration = 0.5;
+			    	else
+			    		leaveduration = 1.0;
 			    }
 			} else if (leave.getStartLeaveSession() == LeaveSession.PM && (endDate.isAfter(startDate))) { 
 				if (leave.getEndLeaveSession() == LeaveSession.PM)
