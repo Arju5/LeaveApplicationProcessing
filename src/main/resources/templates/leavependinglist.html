@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+<link rel="stylesheet" href="../../assets/css/demo_1/style.css"
+	th:href="@{/assets/css/demo_1/style.css}" />
+<link rel="stylesheet" href="../../custom/custom.css"
+	th:href="@{/custom/custom.css}" />
+<title>Leave Summary</title>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+
+	<div class="card">
+		<div class="table-title"></div>
+		<div class="card-body">
+			<!-- <h4 class="card-title">Manage Employees</h4> -->
+			<!-- <div class="row">
+				<div class="col-md-8"></div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<input type="search" class="form-control"
+							placeholder="Search Employee Name Here"
+							style="border-radius: 10px" th:onkeyup>
+					</div>
+				</div>
+			</div> -->
+
+			<table class="table table-hover" th:if="${not #lists.isEmpty(plist)}">
+				<thead>
+					<tr style="background:#d1e0e0">
+						<th>Employee Name</th>
+						<th>Leave Type</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Reason</th>
+						<th>Status</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr  th:each="employee:${plist}">
+						<td th:text="${employee.user.firstName+' '+employee.user.lastName}">Jacob</td>
+						<td th:text=${employee.leaveType.leaveTypeName}>Annual Leave</td>
+						<td th:text=${employee.leaveStartDate}>23/05/2020</td>
+						<td th:text=${employee.leaveEndDate}>24/05/2020</td>
+						<td th:text=${employee.leaveReason}>Vacation</td>
+						<td th:text=${employee.leaveStatus}><label class="badge badge-danger">Pending</label></td>
+						<td><a href="" class="edit"
+							th:href="@{/manager/{username}/leaveapprovalform/(username = ${session.username})}+${employee.id}" th:text="View"><i
+								class="material-icons" title="Edit">&#xE254;</i></a></td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- inject:css -->
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+<link rel="stylesheet" href="../../assets/css/demo_1/style.css"
+	th:href="@{/assets/css/demo_1/style.css}" />
+<link rel="stylesheet" href="../../custom/custom.css"
+	th:href="@{/custom/custom.css}" />
+<title>Public Holiday Summary</title>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<div class="main-panel">
+          <div class="content-wrapper">
+          	<div class="ml-lg-auto ml-3 toolbar-item">
+          	<a href= "publicholiday.html" th:href="@{/admin/{username}/addpublicholiday/(username = ${session.username})}" type="button" class="btn btn-primary toolbar-item">Add</a>
+            <div class="row">
+              <div class="col-lg-6 grid-margin stretch-card">
+              	 <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Roles</h4>
+                    <table class="table table-hover" th:if="${not #lists.isEmpty(phlist)}">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Holiday Name</th>
+                          <th>Date</th>
+<!--                           <th>Start Time</th> -->
+<!--                           <th>End Time</th> -->
+                          <th>Edit User</th>
+                          <th>Delete User</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="publicholiday:${phlist}">
+                          <td th:utext="${publicholiday.Id}">Id</td>
+                          <td th:utext=${publicholiday.phName}>Christmas</td>
+                          <td th:utext=${publicholiday.phDate}>25/12/2020</td>
+<!--                           <td th:utext=${role.startWorkingHour}>Role Name</td> -->
+<!--                           <td th:utext=${role.endWorkingHour}>Role Name</td> -->
+                           <td><a href="publicholiday.html" th:href="@{/admin/{username}/editpublicholiday/{id}(username = ${session.username},id = ${publicholiday.Id})}" th:utext="#{publicholiday.page.edit}"></a></td>
+                          <td><a href="publicholidaylist.html" th:href="@{/admin/{username}/deletepublicholiday/{id}(username = ${session.username},id = ${publicholiday.Id})}" th:utext="#{publicholiday.page.delete}"></a></td>
+                     	</tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</body>
+
+</html>
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- inject:css -->
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+<link rel="stylesheet" href="../../assets/css/demo_1/style.css"
+	th:href="@{/assets/css/demo_1/style.css}" />
+<link rel="stylesheet" href="../../custom/custom.css"
+	th:href="@{/custom/custom.css}" />
+<title>Admin Dashboard</title>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<!-- partial -->
+	<!-- <div class="main-panel"> -->
+	<div class="content-wrapper">
+		<!-- Page Title Header Starts-->
+		<div class="row page-title-header">
+			<div class="col-12">
+				<div class="page-header">
+					<h4 class="approveformhead" style="background: gray">Admin
+						Dashboard</h4>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="d-flex align-items-center pb-2">
+										<div class="dot-indicator bg-danger mr-2"></div>
+										<h4 class="mb-0" style="color:green;">Number of Users</h4>
+									</div>
+									<h4 class="font-weight-semibold" th:utext="${usercount}">$7,590</h4>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="d-flex align-items-center pb-2">
+										<div class="dot-indicator bg-danger mr-2"></div>
+										<h4 class="mb-0" style="color:green;">Number of Roles</h4>
+									</div>
+									<h4 class="font-weight-semibold" th:utext="${rolecount}">$7,590</h4>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="d-flex align-items-center pb-2">
+										<div class="dot-indicator bg-danger mr-2"></div>
+										<h4 class="mb-0" style="color:green;">Number of LeaveTypes</h4>
+									</div>
+									<h4 class="font-weight-semibold" th:utext="${leavetypecount}">$7,590</h4>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+		<br>
+		<h3>User Summary</h3>
+		<table th:if="${not #lists.isEmpty(userlist)}"
+			class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Address</th>
+					<th>Ph Number</th>
+					<th>Role</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user:${userlist}">
+					<td th:text="${user.firstName+' '+user.lastName}" class="py-1">Annual
+						Leave</td>
+					<!--  T(src.main.java.javaca1.model.leaveType) -->
+					<td th:text="${user.emailAddress}">14/01/2020</td>
+					<td th:text="${user.address}">16/01/2020</td>
+					<td th:text="${user.mobileNumber}">Approved</td>
+					<td th:text="${user.role.roleName}">Approved</td>
+					<!-- <td><a href="leavedetails.html"
+						th:href="@{/user/{username}/leavedetails/}+${leave.Id}">View
+							Details</a></td> -->
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+
+
+	<!-- main-panel ends -->
+
+	<script src="../assets/js/shared/off-canvas.js"></script>
+	<script src="../assets/js/shared/misc.js"></script>
+
+	<script src="../assets/js/demo_1/dashboard.js"></script>
+	<!-- End custom js for this page-->
+</body>
+</html>

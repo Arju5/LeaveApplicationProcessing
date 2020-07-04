@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../assets/css/shared/style.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+    	<h1>Report Page</h1>
+    	<p th:text="#{report.welcome}">This is the report page</p>
+    	<table class="w3-container1">
+			<tr>
+				<td></td>
+				<td>Start Date</td>
+				<td>End Date</td>
+			</tr>
+			<tr>
+				<td>Report TimeLine(Not Inclusive for End Date Data)</td>
+				<td><input type = "date" id = "start" name = "report-start-date"></td>
+				<td><input type = "date" id = "end" name = "report-end-date"></td>
+			</tr>
+			<tr>
+				<td width = "33%">Report Type</td>
+				<td width = "33%">Staff Category</td>
+				<td width = "33%">Employee Name</td>
+			</tr>
+			<tr>
+				<td width = "33%">
+					<select name = "staff-category" id = "staff-category">
+						<option value="All">All</option>						
+						<option value="Annual">Annual</option>	
+						<option value="Medical">Medical</option>	
+						<option value="Compensation">Compensation</option>	
+					</select>
+				</td>
+				<td width = "33%">
+					<select name = "report-type" id = "report-type">
+						<option value="All">All</option>							
+						<option value="Staff">Staff</option>	
+						<option value="Admin">Admin</option>	
+						<option value="Manager">Manager</option>	
+					</select>
+				</td>
+				<td width = "33%">
+					<select name = "employee-name" id = "employee-name">
+						<option value="Darell">Darell</option>							
+						<option value="Rohan">Rohan</option>	
+						<option value="Sheryl">Sheryl</option>	
+					</select>
+				</td>
+
+			</tr>
+		</table>
+		<br>
+    	<table class="w3-container2">
+    	<tr>
+			<td>Name</td>
+			<td>Role</td>
+			<td>Leave Type</td>
+			<td>Start Date</td>
+			<td>End Date</td>
+		</tr>
+		<tr th:each="leave:${leaves}">
+			<td th:text=${leave.leaveid}>Id</td>
+			<td th:text=${leave.firstName}>Name</td>
+		</tr>
+		</table>
+		
+		<div th:replace="fragments/general.html :: footer"></div>
+	</body>
+	
+	

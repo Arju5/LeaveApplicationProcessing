@@ -1,0 +1,36 @@
+<html>
+  <head>
+    
+    <title>Attendance Register</title>
+  </head>
+   <h1 class="text-monospace" align="center ">Attendance Register</h1> 
+    <body>
+        <label for="start">Today date:</label>
+
+        <input type="date" id="start" name="trip-start"
+               value="2018-07-22"
+               min="2018-01-01" max="2030-12-31">
+       <br><br/>
+
+       <label for="name">Name (4 to 8 characters):</label>
+
+       <input type="text" id="name" name="name" required
+              minlength="4" maxlength="8" size="10">
+       
+         <br><br/>
+         <form>
+          <label for="appt-time">CheckInTime : </label>
+          <input id="appt-time" type="time" name="appt-time">
+        </form>
+        <br><br/>
+        <form>
+         <label for="appt-time">CheckOutTime : </label>
+         <input id="appt-time" type="time" name="appt-time">
+       </form>
+       <br><br/>
+        <input type="submit" value="Submit">
+        
+      </form>
+    </body>
+  
+</html>

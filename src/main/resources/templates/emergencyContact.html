@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Employee Details</title>
+<!-- plugins:css -->
+    <link rel="stylesheet" href="../../../assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../../assets/vendors/iconfonts/ionicons/css/ionicons.css">
+    <link rel="stylesheet" href="../../../assets/vendors/iconfonts/typicons/src/font/typicons.css">
+    <link rel="stylesheet" href="../../../assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../../../assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../../assets/vendors/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../../assets/vendors/icheck/skins/all.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../../assets/css/shared/style.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../../../assets/css/demo_1/style.css">
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="../../../assets/images/favicon.png" />
+</head>
+
+<body>
+	<div class="main-panel">
+          <div class="content-wrapper">
+	<div class="col-12 grid-margin">
+		<div class="card">
+			<div class="card-body">
+			<h1 class="card-title"> Employee Emergency Contact</h1>
+			<form class="form-sample" th:object = "${user}" th:action="@{/admin/saveuser}" method="post">
+			<p class="card-description"> Emergency Contact</p>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+							<label class="col-sm-3 col-form-label">First Name</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" th:field="*{eFirstName}" th:text="${eFirstName}"/>
+								<p th:if="${#fields.hasErrors('eFirstName')}" th:errors="*{eFirstName}"></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Last Name</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" th:field="*{eLastName}" th:text="${eLastName}"/>
+								<p th:if="${#fields.hasErrors('eLastName')}" th:errors="*{eLastName}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Home</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" th:field="*{eHomeNumber}" th:text="${eHomeNumber}"/>
+								<p th:if="${#fields.hasErrors('eHomeNumber')}" th:errors="*{eHomeNumber}"></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Mobile</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" th:field="*{eMobileNumber}" th:text="${eMobileNumber}"/>
+								<p th:if="${#fields.hasErrors('eMobileNumber')}" th:errors="*{eMobileNumber}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Relationship</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" th:field="*{relationship}" th:text="${relationship}"/>
+								<p th:if="${#fields.hasErrors('relationship')}" th:errors="*{relationship}"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</body>
+</html>

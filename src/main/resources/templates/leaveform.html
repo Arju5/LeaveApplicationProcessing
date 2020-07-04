@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title th:utext="#{leaveform.title}">Apply Leave</title>
+	
+	<link rel="stylesheet" href="../../assets/css/shared/style.css"
+		th:href="@{/assets/css/shared/style.css}" />
+	
+	<link rel="stylesheet" href="../../custom/custom.css" th:href="@{/custom/custom.css}" /> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"></header>
+	<div class="card">
+		<div class="card-body">
+			<h2 class="approveformhead">Apply Leave</h2>
+			<form class="form-sample" action="#" th:object="${leave}" th:action="@{/user/{username}/leave/save/(username = ${session.username})}" method="post" >
+				<fieldset>
+				<input type="hidden" th:field="*{id}">  
+				</fieldset>
+				<div class="row">
+					<div class="col-md-6">
+						<fieldset>
+							<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Leave Type</label>
+							<div class="col-sm-6">
+								<select th:id="leavetypename" th:field="*{leaveType.leaveTypeName}" class="form-control" style="border-radius: 10px" th:onchange="getLeaveBalance()" required>
+									<option value="" class="form-control" style="border-radius: 10px">Select Leave Type</option>
+								    <option th:each="typeofLeave:${leaveTypes}" th:value="${typeofLeave}" th:text="${typeofLeave}" class="form-control" style="border-radius: 10px"></option>
+								</select>
+							</div>
+						</div>
+						</fieldset>
+					</div>
+					<div class="col-md-6">
+						<fieldset>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Leave Balance</label>
+								<div class="col-sm-6">
+									<input th:id="leaveBalance" type="text" class="form-control" style="border-radius: 10px" disabled>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<fieldset>
+							<div class="form-group row">
+								<label class="col-sm-6 col-form-label">Start Date</label>
+								<div class="col-sm-6">
+									<input type="text" autocomplete="off" id="start" th:value="*{leaveStartDate}"  th:field="*{startDate}" class="form-control" style="border-radius: 10px" required>
+								</div>
+							</div>
+							<p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
+						</fieldset>
+					</div>
+					<div class="col-md-3">
+						<fieldset>
+							<div class="form-group row">
+							<label class="col-sm-6 col-form-label" >Start Session</label>
+							<div class="col-sm-6">
+								<div class="switch-field" >
+									<input type="radio" id="radio-one" th:field="*{{startSession}}"  name="switch-one" value="AM" required>
+							        <label for="radio-one">AM</label>
+							        <input type="radio" id="radio-two" th:field="*{{startSession}}" name="switch-one" value="PM" />
+							        <label for="radio-two">PM</label>
+								</div>
+							</div>
+						</div>
+						<p th:if="${#fields.hasErrors('startSession')}" th:errors="*{startSession}"></p>
+						</fieldset>
+					</div>
+					<div class="col-md-3">
+						<fieldset>
+							<div class="form-group row">
+								<label class="col-sm-6 col-form-label">End Date</label>
+								<div class="col-sm-6">
+									<input type="text" autocomplete="off" id="end" th:value="*{leaveEndDate}" th:field="*{endDate}" class="form-control" style="border-radius: 10px" required>
+								</div>
+							</div>
+							<p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+						</fieldset>
+					</div>
+					<div class="col-md-3">
+						<fieldset>
+							<div class="form-group row">
+								<label class="col-sm-6 col-form-label" >End Session</label>
+								<div class="col-sm-6">
+									<div class="switch-field" >
+										<input type="radio" id="radio-three" th:field="*{{endSession}}" name="switch-two" value="AM" required>
+								        <label for="radio-three">AM</label>
+								        <input type="radio" id="radio-four" th:field="*{{endSession}}" name="switch-two" value="PM" />
+								        <label for="radio-four">PM</label>
+									</div>
+								</div>
+							</div>
+							<p th:if="${#fields.hasErrors('endSession')}" th:errors="*{endSession}"></p>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<fieldset>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Delegation (if required)</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" style="border-radius: 10px">
+								</div>
+							</div>
+							
+						</fieldset>
+					</div>
+					<div class="col-md-6">
+						<fieldset>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Phone (Overseas)</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" style="border-radius: 10px" th:field="*{user.mobileNumber}">
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<p th:if="${#fields.hasErrors('endSession')}" th:errors="*{endSession}"></p>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<fieldset>
+							<div class="form-group">
+								<label for="exampleTextarea1">Reason</label>
+								<textarea class="form-control" id="exampleTextarea1" rows="2" th:field="*{leaveReason}" required></textarea>
+							</div>
+							<p th:if="${#fields.hasErrors('leaveReason')}" th:errors="*{leaveReason}"></p>
+						</fieldset>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-success ml-2" style="float: right">Submit</button>
+				<button type="reset" class="btn btn-warning" th:href="@{/user/{username}/(username=${session.username})}" style="float: right">Reset</button>
+				<a type="button" class="btn btn-danger" th:href="@{/user/{username}/(username=${session.username})}" style="float: right">Cancel</a>
+			</form>
+		</div>
+	</div>
+	<script th:inline="javascript"> function getLeaveBalance() {
+		var typeofleave = document.getElementById("leavetypename");
+		var leaveBalance = document.getElementById("leaveBalance");
+		/*<![CDATA[*/ 
+			var leaveBalancelist = /*[[${leaveBalances}]]*/ "0";
+			for(i=0; i<leaveBalancelist.length; i++) {
+				if(leaveBalancelist[i].leaveType.leaveTypeName == typeofleave.value) {
+					leaveBalance.value = leaveBalancelist[i].leaveQuantity;
+					break;
+				} 
+			}
+			
+			/*]]>*/
+		
+	}</script>
+	<script>
+    $('#start').datepicker({
+        onSelect: function(dateText, inst){
+            $('#end').datepicker('option', 'minDate', new Date(dateText));
+        },
+    });
+
+    $('#end').datepicker({
+        onSelect: function(dateText, inst){
+            $('#start').datepicker('option', 'maxDate', new Date(dateText));
+        }
+    });
+	</script>
+</body>
+</html>

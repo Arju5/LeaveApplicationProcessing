@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- inject:css -->
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+<link rel="stylesheet" href="../../assets/css/demo_1/style.css"
+	th:href="@{/assets/css/demo_1/style.css}" />
+<link rel="stylesheet" href="../../custom/custom.css"
+	th:href="@{/custom/custom.css}" />
+<title>Leave History</title>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+
+
+	
+			<!-- nav bar -->
+			<div class="col-12">
+				<div class="page-header">
+					<h3 class="approveformhead">Leave History</h3>
+					<!-- <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
+						<ul class="quick-links ml-auto">
+							<li><a href="#">Back</a></li>
+						</ul>
+					</div> -->
+				</div>
+			</div>
+			<!-- end of nav bar -->
+
+			<!-- Form style -->
+			<div class="col-12 grid-margin">
+				<div class="card">
+					<div class="card-body">
+
+						<!-- <h4 class="card-title">Leave History</h4> -->
+						<form class="form-sample" action="#" th:object="${leavedetail}"
+							th:action="@{/user/{username}/updateleave/(username = ${session.username})}"
+							method="post">
+							<input type="hidden" th:field="*{id}">
+							<div class="row">
+								<div class="col-md-6" style="flex: 0 0 50%">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">LeaveType</label>
+										<div class="col-sm-9">
+											<select th:name="${leavedetail.leaveType}" id="leavetype"
+												class="form-control">
+												<option th:each="ltype : ${ltypes}" th:value="${ltype}"
+													th:text="${ltype}"
+													th:selected="${leavedetail.leaveType.leaveTypeName == ltype}">
+													<!-- th:disabled="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
+												</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6" style="flex: 0 0 50%">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">Start Date</label>
+										<div class="col-sm-9">
+											<input type="date" th:value="*{leaveStartDate}" 
+												class="form-control" placeholder="dd/mm/yyyy"
+												id="leaveStartDate">
+											<!-- th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
+											<p th:if="${#fields.hasErrors('leaveStartDate')}"
+												th:errors="*{leaveStartDate}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6" style="flex: 0 0 50%">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">Reason</label>
+										<div class="col-sm-9">
+											<input type="text" th:value="*{leaveReason}" th:field="*{leaveReason}" 
+												
+												id="leaveReason" class="form-control">
+												<!-- th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6" style="flex: 0 0 50%">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">End Date</label>
+										<div class="col-sm-9">
+											<input type="date" th:value="*{leaveEndDate}" 
+												
+												class="form-control" placeholder="dd/mm/yyyy"
+												id="leaveEndDate">
+												<!-- th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
+											<p th:if="${#fields.hasErrors('leaveEndDate')}"
+												th:errors="*{leaveEndDate}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6" style="flex: 0 0 50%">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">Leave Status</label>
+										<div class="col-sm-9">
+											<input type="text" th:value="*{leaveStatus}" th:field="*{leaveStatus}"
+												class="form-control" readonly="readonly">
+										</div>
+									</div>
+								</div>
+								<!-- <div class="col-md-6" style="flex: 0 0 50%">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">Duration</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="leaveDuration">
+										</div>
+									</div>
+								</div> -->
+							</div>
+
+							<!-- <div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="exampleTextarea1">Transfer Work</label>
+										<textarea th:value="*{standInStaff}" class="form-control"
+											id="standInStaff" rows="2"></textarea>
+										<select th:field="*{users}" id="standInStaff" class="form-control">
+											<option th:each="user : ${users}" th:value="*{standInStaff}"
+												th:text="${user.firstName}"></option>
+										</select>
+									</div>
+								</div>
+							</div> -->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="exampleTextarea1">Contact Details</label>
+										<textarea class="form-control" id="contactDetails" rows="2"></textarea>
+
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="exampleTextarea1">Comments</label>
+										<textarea th:value="*{leaveComments}" th:field="*{leaveComments}" class="form-control"
+											id="leaveComment" rows="2" readonly="readonly"></textarea>
+
+									</div>
+								</div>
+							</div>
+							<div class="template-demo">
+								<button type="button"
+									th:onclick="|updateleave(${leavedetail.id})|"
+									th:if="${leavedetail.LeaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED OR leavedetail.LeaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
+									class="btn btn-primary btn-rounded btn-fw">Update</button>
+								<!-- th:href="@{/user/{username}/updateleave/(username = ${session.username})}+${leavedetail.id}" -->
+								<!-- <input type="submit" value="Update"
+									th:if="${leavedetail.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED OR leavedetail.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
+									class="btn btn-primary btn-rounded btn-fw" />  -->
+
+								<a href="leavelist.html"
+									th:href="@{/user/{username}/cancelLeave/(username = ${session.username})}+${leavedetail.id}"
+									th:if="${leavedetail.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPROVED}"
+									class="btn btn-secondary btn-rounded btn-fw">Cancel</a> 
+								<a href="leavelist.html"
+									th:href="@{/user/{username}/deleteLeave/ (username = ${session.username})}+${leavedetail.id}"
+									th:if="${leavedetail.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED OR leavedetail.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).UPDATED }"
+									class="btn btn-danger btn-rounded btn-fw">Delete</a>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		
+	<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js}"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" th:src="@{/custom/custom.js}"></script>
+</body>
+</html>

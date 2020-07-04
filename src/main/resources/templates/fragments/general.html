@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+</head>
+<body>
+	<header th:fragment="header">
+		<div class="topnav" id="myTopnav">
+		  <a href="#home">Leave Application System</a>
+		  <a th:href="@{/user/{username}(username = ${session.username})}">Home</a>
+		  <div class="dropdownhead">
+		    <button class="dropbtn" th:href="@{/{username}(username = ${session.username})}" th:if="not ${session.username == null}">Leave 
+		    </button>
+		    <div class="dropdownhead-content">
+		      <a href="#" th:href="@{/user/{username}(username = ${session.username})}">User Dashboard</a>
+		      <a href="#" th:href="@{/user/{username}/leave/(username = ${session.username})}">Apply Leave</a>
+		      <a href="#" th:href="@{/user/{username}/leavelist/(username = ${session.username})}">Leave Summary</a>
+		    </div>
+		  </div> 
+		  <div class="dropdownhead">
+		    <button class="dropbtn" th:href="@{/admin/{username}(username = ${session.username})}" th:if="${session.role == 'Admin'}">Admin</button>
+		    <div class="dropdownhead-content">
+		      <a href="#" th:href="@{/admin/{username}(username = ${session.username})}">Admin Dashboard</a>
+		      <a href="#" th:href="@{/admin/{username}/rolesummary(username = ${session.username})}">Role Summary</a>
+		      <a href="#" th:href="@{/admin/{username}/summary(username = ${session.username})}">User Summary</a>
+		      <a href="#" th:href="@{/admin/{username}/leavetypesummary(username = ${session.username})}">Leave Type Summary</a>
+		      <a href="#" th:href="@{/admin/{username}/publicholidaysummary(username = ${session.username})}">Public Holiday Summary</a>
+
+		    </div>
+		  </div> 
+		  <div class="dropdownhead">
+		    <button class="dropbtn" th:href="@{/manager/{username}(username = ${session.username})}" th:if="${session.role == 'Manager'}">Manager 
+		    </button>
+		    <div class="dropdownhead-content">
+		      <a href="#" th:href="@{/manager/{username}(username = ${session.username})}">Manager Dashboard</a>
+		      <a href="#" th:href="@{/manager/{username}/viewappliedlist(username = ${session.username})}">Leave Approval Summary</a>
+		      <a href="#" th:href="@{/manager/{username}/report(username = ${session.username})}">Report Generator</a>
+		    </div>
+		  </div>
+		  <a style="float:right" href="#contact" th:href="@{/}" th:if="${session.username == null}">Login</a>
+	  	  <a style="float:right" href="#contact" th:href="@{/logout}" th:unless="${session.username == null}">Logout</a>
+	  	  <a style="float:right" href="account.html" th:utext="'Welcome ' + ${session.username}" th:if="not ${session.username == null}">Username</a>   
+		  
+		</div>
+	</header>
+</body>
+</html>
+	<footer th:fragment="footer">
+		<div class="container-fluid clearfix">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 Team 3. All rights reserved.</span>
+              </span>
+            </div>
+	</footer>
+</body>
+</html>

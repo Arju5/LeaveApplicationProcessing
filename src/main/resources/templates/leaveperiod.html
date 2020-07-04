@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+</head>
+<body>
+	<div class="card">
+		<div class="table-title"></div>
+		<div class="card-body">
+			<!-- <h4 class="card-title">Manage Employees</h4> -->
+			<div class="row">
+				<div class="col-md-4" style="flex: 0 0 50%">
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">Start Date</label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" id="startdate"
+								style="border-radius: 10px">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" style="flex: 0 0 50%">
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">End Date</label>
+						<div class="col-sm-9">
+							<input type="date" class="form-control" id="enddate"
+								style="border-radius: 10px">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" style="flex: 0 0 50%">
+					<div class="form-group row">
+						<button type="button" class="btn btn-success ml-2"
+							style="float: right" th:onclick="|searchEmployee()|">Search
+							Employee</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="elist">
+	<th:block th:fragment="elist">
+	</th:block>
+	</div>
+	
+	
+	<script
+		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js}"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" th:src="@{/custom/custom.js}"></script>
+</body>
+</html>
+

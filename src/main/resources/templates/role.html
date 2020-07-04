@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../assets/css/shared/style.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<div class="main-panel">
+          <div class="content-wrapper">
+	<div class="col-12 grid-margin">
+		<div class="card">
+			<div class="card-body">
+				<h1 class="card-title"> Role</h1>
+				<form class="form-sample" th:object = "${role}" th:action="@{/user/admin/saverole}" method="post")>
+					<p class="card-description"> Role Details </p>
+					<input type="hidden" th:field="*{Id}">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group row">
+							<label class="col-sm-3 col-form-label">Role Name</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" th:field = "*{roleName}"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				<button type="button" class="btn btn-danger" th:action="@{/user/admin/deleterole}">Delete</button>
+				<button type="submit" class="btn btn-success mr-2">Save</button>
+                          <button class="btn btn-light">Cancel</button>
+			</form>
+			</div>
+		</div>
+	<footer class="footer">
+            <div class="container-fluid clearfix">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2020 Team 3. All rights reserved.</span>
+              </span>
+            </div>
+          </footer>
+</div>
+</div>
+</div>
+ <!-- plugins:js -->
+    <script src="../../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../../../assets/vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../../../assets/js/shared/off-canvas.js"></script>
+    <script src="../../../assets/js/shared/misc.js"></script>
+    <!-- endinject -->
+</body>
+</html>

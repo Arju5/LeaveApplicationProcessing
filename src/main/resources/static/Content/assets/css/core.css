@@ -1,0 +1,526 @@
+.row, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+    cursor:pointer !important
+}
+
+    a:hover {
+        color:unset !important;
+    }
+
+    a:focus, a:hover {
+        color: #395CA3;
+    }
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.font-normal {
+    font-weight: normal;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.pa-0 {
+    padding: 0;
+}
+
+.pa-5 {
+    padding: 5px;
+}
+
+.pa-10 {
+    padding: 10px;
+}
+
+.pa-15 {
+    padding: 15px;
+}
+
+.pa-20 {
+    padding: 20px;
+}
+
+.pa-25 {
+    padding: 25px;
+}
+
+.pa-30 {
+    padding: 30px;
+}
+
+.pt-0 {
+    padding-top: 0;
+}
+
+.pt-5 {
+    padding-top: 5px;
+}
+
+.pt-10 {
+    padding-top: 10px;
+}
+
+.pt-15 {
+    padding-top: 15px;
+}
+
+.pt-20 {
+    padding-top: 20px;
+}
+
+.pt-25 {
+    padding-top: 25px;
+}
+
+.pt-30 {
+    padding-top: 30px;
+}
+
+.pb-0 {
+    padding-bottom: 0;
+}
+
+.pb-5 {
+    padding-bottom: 5px;
+}
+
+.pb-10 {
+    padding-bottom: 10px;
+}
+
+.pb-15 {
+    padding-bottom: 15px;
+}
+
+.pb-20 {
+    padding-bottom: 20px;
+}
+
+.pb-25 {
+    padding-bottom: 25px;
+}
+
+.pb-30 {
+    padding-bottom: 30px;
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.pl-5 {
+    padding-left: 5px;
+}
+
+.pl-10 {
+    padding-left: 10px;
+}
+
+.pl-15 {
+    padding-left: 15px;
+}
+
+.pl-20 {
+    padding-left: 20px;
+}
+
+.pl-25 {
+    padding-left: 25px;
+}
+
+.pl-30 {
+    padding-left: 30px;
+}
+
+.pr-0 {
+    padding-right: 0;
+}
+
+.pr-5 {
+    padding-right: 5px;
+}
+
+.pr-10 {
+    padding-right: 10px;
+}
+
+.pr-15 {
+    padding-right: 15px;
+}
+
+.pr-20 {
+    padding-right: 20px;
+}
+
+.pr-25 {
+    padding-right: 25px;
+}
+
+.pr-30 {
+    padding-right: 30px;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.m-5 {
+    margin: 5px;
+}
+
+.m-10 {
+    margin: 10px;
+}
+
+.m-15 {
+    margin: 15px;
+}
+
+.m-20 {
+    margin: 20px;
+}
+
+.m-25 {
+    margin: 25px;
+}
+
+.m-30 {
+    margin: 30px;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-25 {
+    margin-top: 25px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-25 {
+    margin-bottom: 25px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+.ml-0 {
+    margin-left: 0;
+}
+
+.ml-5 {
+    margin-left: 5px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.ml-15 {
+    margin-left: 15px;
+}
+
+.ml-20 {
+    margin-left: 20px;
+}
+
+.ml-25 {
+    margin-left: 25px;
+}
+
+.ml-30 {
+    margin-left: 30px;
+}
+
+.mr-0 {
+    margin-right: 0;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}
+
+.mr-15 {
+    margin-right: 15px;
+}
+
+.mr-20 {
+    margin-right: 20px;
+}
+
+.mr-25 {
+    margin-right: 25px;
+}
+
+.mr-30 {
+    margin-right: 30px;
+}
+
+.no-border {
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.card {
+    border: none;
+    -webkit-box-shadow: 0 0 3px rgba(31,30,47,.05);
+    box-shadow: 0 0 3px rgba(31,30,47,.05);
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.panel-default {
+    border-radius: 5px;
+    background: #fff;
+    transition: all 50ms ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+    .panel-default:hover {
+        transition: all 100ms ease-in-out;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+.panel-custom {
+    background: #fff;
+    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.05);
+    transition: all 100ms ease-in-out;
+    border-radius: 10px;
+}
+
+.panel-border {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.panel-header {
+    border-bottom:1px solid #eee;
+    transition: height 0.3s;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.word-break {
+    word-break:break-all
+}
+
+.display-flex {
+    display:flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*****  Check Box *****/
+.term-btn {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    margin:0
+}
+
+label.term-btn
+{
+    font-weight: unset;  
+    font-size: 12px 
+}
+
+label.term-btn a
+{
+    text-decoration: none;
+    color:#2196F3      
+}
+
+label.term-btn a:hover
+{
+    text-decoration: underline
+}
+
+.term-btn input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: #ddd;
+}
+
+
+.term-btn:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+
+.term-btn input:checked ~ .checkmark {
+    background-color: #395CA3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.term-btn input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.term-btn .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.pos-relative {
+    position:relative
+}
+
+.pos-absolute {
+    position:absolute
+}

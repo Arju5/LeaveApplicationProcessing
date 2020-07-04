@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+<link rel="stylesheet" href="../../assets/css/demo_1/style.css"
+	th:href="@{/assets/css/demo_1/style.css}" />
+<link rel="stylesheet" href="../../custom/custom.css"
+	th:href="@{/custom/custom.css}" />
+<body>
+
+	<!-- <div class="main-panel"> -->
+	<header th:insert="fragments/general.html :: header"> </header>
+
+	<div class="content-wrapper">
+		<div class="col-12">
+			<div class="page-header">
+				<h4 class="approveformhead">Leave Request Form</h4>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-body">
+
+				<form action="#" th:object="${leave}" th:action="@{/leave/save}"
+					class="form-sample">
+					<div class="row">
+						<div class="col-md-6" style="flex: 0 0 50%"></div>
+						<div class="col-md-6" style="flex: 0 0 50%">
+							<p style="color: red; float: right"
+								th:text="#{leaveform.submitdate}+${#dates.format(new java.util.Date(leave.applyLeaveDate), 'dd-MM-yyyy')}"></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6" style="flex: 0 0 50%">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">First Name</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control"
+										style="border-radius: 10px" th:field="*{user.firstName}"
+										readonly="readonly">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6" style="flex: 0 0 50%">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Start Date</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control"
+										th:field="*{leaveStartDate}"
+										th:text="${#dates.format(leaveStartDate, 'dd-MM-yyyy')}"
+										style="border-radius: 10px" readonly="readonly">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6" style="flex: 0 0 50%">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Last Name</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control"
+										style="border-radius: 10px" th:field="*{user.lastName}"
+										readonly="readonly">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6" style="flex: 0 0 50%">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">End Date</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control"
+										style="border-radius: 10px" th:field="*{leaveEndDate}"
+										th:text="${#dates.format(leaveEndDate, 'dd-MM-yyyy')}"
+										readonly="readonly">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6" style="flex: 0 0 50%">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Leave Type</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control"
+										th:field="*{leaveType.leaveTypeName}" readonly="readonly"
+										style="border-radius: 10px">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6" style="flex: 0 0 50%">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Reason</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control"
+										style="border-radius: 10px" th:field="*{leaveReason}"
+										readonly="readonly">
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-md-6" style="flex: 0 0 50%">
+								<div class="form-group row">
+									<label class="col-sm-3 col-form-label">Duration</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control"
+											style="border-radius: 10px" readonly="readonly">
+									</div>
+								</div>
+							</div> -->
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="exampleTextarea1">Comment</label>
+								<textarea class="form-control" id="comment" rows="2"></textarea>
+							</div>
+						</div>
+
+					</div>
+					<button type="button" class="btn btn-success ml-2"
+						style="float: right" th:onclick="|approveleave(${leave.id})|">Approve</button>
+
+					<button type="button" class="btn btn-danger" style="float: right"
+						th:onclick="|cancelleave(${leave.id})|">Reject</button>
+
+				</form>
+				<br> <br>
+
+				<table class="table table-hover"
+					th:if="${not #lists.isEmpty(elist)}">
+					<thead>
+						<tr style="background: #d1e0e0">
+							<th>Employee Name</th>
+							<th>Leave Type</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Reason</th>
+							<th>Status</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="employee:${elist}">
+							<td
+								th:text="${employee.user.firstName+' '+employee.user.lastName}">Jacob</td>
+							<td th:text=${employee.leaveType.leaveTypeName}>Annual Leave</td>
+							<td th:text=${employee.leaveStartDate}>23/05/2020</td>
+							<td th:text=${employee.leaveEndDate}>24/05/2020</td>
+							<td th:text=${employee.leaveReason}>Vacation</td>
+							<td th:text=${employee.leaveStatus}><label
+								class="badge badge-danger">Pending</label></td>
+
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- </div> -->
+
+	<script
+		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js}"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" th:src="@{/custom/custom.js}"></script>
+</body>
+</html>
+

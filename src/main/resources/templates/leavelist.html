@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Leave history</title>
+
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}">
+<!-- endinject -->
+<!-- Layout styles -->
+<link rel="stylesheet" href="../../assets/css/demo_1/style.css"
+	th:href="@{/assets/css/demo_1/style.css}">
+<!-- End Layout styles -->
+<link rel="shortcut icon" href="../../assets/images/favicon.png" />
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<!-- nav bar -->
+	<div class="col-12">
+		<div class="page-header">
+			<h3 class="approveformhead">Leave Summary</h3>
+		</div>
+	</div>
+	<!-- end of nav bar -->
+
+	<div class="card">
+		<div class="card-body">
+
+			<div class="row">
+				<!-- Annual Leave card example -->
+				<div class="col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-primary shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
+									<div
+										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Annual
+										Leave</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+								</div>
+								<div class="col-auto">
+									<i class="fas fa-comments fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Medical Leave Card Example -->
+				<div class="col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-success shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
+									<div
+										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Medical
+										Leave</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800">60</div>
+								</div>
+								<div class="col-auto">
+									<i class="fas fa-comments fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Compensation Leave Card Example -->
+				<div class="col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-warning shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
+									<div
+										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Compensation
+										Leave</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+								</div>
+								<div class="col-auto">
+									<i class="fas fa-comments fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<table th:if="${not #lists.isEmpty(leaves)}"
+				class="table table-striped">
+				<thead>
+					<tr>
+						<th>Leave Type</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Status</th>
+						<th></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="leave:${leaves}">
+						<td th:text="${leave.leaveType.leaveTypeName}" class="py-1">Annual
+							Leave</td>
+						<!--  T(src.main.java.javaca1.model.leaveType) -->
+						<td th:text="${leave.leaveStartDate}">14/01/2020</td>
+						<td th:text="${leave.leaveEndDate}">16/01/2020</td>
+						<td th:text="${leave.leaveStatus}">Approved</td>
+						<td><a href="leavedetails.html" th:href="@{/user/{username}/leavedetails/(username = ${session.username})}+${leave.Id}">View Details</a></td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

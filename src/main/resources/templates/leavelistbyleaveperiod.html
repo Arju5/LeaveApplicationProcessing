@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<div th:fragment="elist">
+		
+		<table class="table table-hover" th:if="${not #lists.isEmpty(elist)}">
+			<thead>
+				<tr style="background: #d1e0e0">
+					<th>Employee Name</th>
+					<th>Leave Type</th>
+					<th>Start Date</th>
+					<th>End Date</th>
+					<th>Reason</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="employee:${elist}">
+					<td th:text=${employee.user.firstName}+${employee.user.lastName}>Jacob</td>
+					<td th:text=${employee.leaveType.leaveTypeName}>Annual Leave</td>
+					<td th:text=${employee.leaveStartDate}>23/05/2020</td>
+					<td th:text=${employee.leaveEndDate}>24/05/2020</td>
+					<td th:text=${employee.leaveReason}>Vacation</td>
+					<td th:text=${employee.leaveStatus}><label
+						class="badge badge-danger">Pending</label></td>
+					
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+</body>
+</html>

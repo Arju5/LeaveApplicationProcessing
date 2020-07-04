@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Leave Type Summary</title>
+<link rel="stylesheet" href="../../assets/css/shared/style.css"
+	th:href="@{/assets/css/shared/style.css}" />
+</head>
+<body>
+	<header th:insert="fragments/general.html :: header"> </header>
+	<div class="main-panel">
+          <div class="content-wrapper">
+          	<div class="ml-lg-auto ml-3 toolbar-item">
+          	<a href= "leavedetails.html" th:href="@{/admin/{username}/addrole/(username = ${session.username})}" type="button" class="btn btn-primary toolbar-item">Add</a>
+            <div class="row">
+              <div class="col-lg-6 grid-margin stretch-card">
+              	 <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Leave Type</h4>
+                    <table class="table table-hover" th:if="${not #lists.isEmpty(leavetypes)}">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Leave Type Name</th>
+                          <th>Role</th>
+                          <th>Max Leave</th>
+                          <th>Edit Leave Type</th>
+                          <th>Delete Leave Type</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="leavetype:${leavetypes}">
+                          <td th:utext="${leavetype.Id}">01</td>
+                          <td th:utext="${leavetype.leaveTypeName}">01</td>
+                          <td th:utext=${leavetype.role.roleName}>Manager</td>
+                          <td th:utext=${leavetype.maxLeaveDuration}>3</td>
+                           <td><a href="leavetypedetails.html" th:href="@{/admin/{username}/editleavetype/{leavetypeid}(username = ${session.username},leavetypeid = ${leavetype.Id})}" th:utext="#{leavetype.page.edit}"></a></td>
+                          <td><a href="leavetypesummary.html" th:href="@{/admin/{username}/deleteleavetype/{leavetypeid}(username = ${session.username},leavetypeid = ${leavetype.Id})}" th:utext="#{leavetype.page.delete}"></a></td>
+                     	</tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</body>
+
+</html>
+
