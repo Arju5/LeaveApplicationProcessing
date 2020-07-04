@@ -197,14 +197,13 @@ public class AdminController {
 		return "leavetypesummary";
 	}
 	
-	@RequestMapping("/{username}/deletepublicholiday")
-	public String DeletePublicHoliday(Model model) {
-		PublicHoliday publicholiday = new PublicHoliday();
-		//model.addAttribute(publicholiday, publicholiday);
-		//LocalDate ld = // Convert string date of holidayDate attribute to localdate type and assign it to phdate of public holiday class
-		//publicholiday.setPhDate(LocalDate.of);
-		//Create public holiday service and call phservice.save(publicholiday)
-		return "publicholidaylist";
+	@RequestMapping("/{username}/deletepublicholiday/{id}")
+	public String DeletePublicHoliday(@PathVariable("username") String username,@PathVariable("id") Integer id, Model model) {
+		PublicHoliday publicHoliday = phservice.findById(id);
+		System.out.println("This is inside delete publicholiday");
+		phservice.deletePublicHoliday(publicHoliday);
+		model.addAttribute("publicholiday",publicHoliday);
+		return "redirect:/admin/" + username + "/publicholidaysummary";
 	}
 
 
@@ -213,14 +212,7 @@ public class AdminController {
 		System.out.println("------------");
 		System.out.println("This is inside /manager/{username}/leavetypesummary mapping ");
 		return "viewemployee";
-	}
-	
-	@GetMapping("/{username}/rolesummary/deleterole")
-	public String RoleSummary3(Model model,@PathVariable("username") String username) {
-		System.out.println("------------");
-		System.out.println("This is inside /manager/{username}/rolesummary mapping ");
-		return "viewemployee";
-	}
+	}	
 
 	@GetMapping("/{username}/leavetypesummary/deleteleavetype")
 	public String DeleteLeaveType(Model model,@PathVariable("username") String username) {
@@ -271,6 +263,7 @@ public class AdminController {
 		rservice.deleteRole(rservice.findRoleById(id));
 		return "forward:/admin/"+ session.getAttribute("username") +"/rolesummary";
 	}
+	
 	
 //	@GetMapping("{/{username}/deleterole/{id}")
 //	public String DeleteLeaveType(Model model, @PathVariable("username") String username,@PathVariable("id") Integer id, HttpSession session) {

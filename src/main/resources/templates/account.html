@@ -133,7 +133,7 @@
 						<div class="col-sm-9">
 							<select class="form-control" th:field="*{role}">
 								<option value="" class="form-control" th:if="${user.Id == null}">Select Role Type</option>
-								<option value="" class="form-control" th:text="*{role.roleName}" th:unless="${user.Id == null}">Select Role Type</option>
+								<option value="" class="form-control" th:unless="${user.Id == null}"></option>
 								<option th:each="role:${roles}" th:value = "${role.roleName}" th:text = "${role.roleName}"></option>
 							</select>
 						</div>
