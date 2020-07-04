@@ -261,7 +261,7 @@ public class AdminController {
 	@GetMapping("/{username}/deleterole/{id}")
 	public String DeleteRole(Model model, @PathVariable("username") String username, @PathVariable("id") Integer id, HttpSession session) {
 		rservice.deleteRole(rservice.findRoleById(id));
-		return "forward:/admin/"+ session.getAttribute("username") +"/rolesummary";
+		return "redirect:/admin/" + username +"/rolesummary";
 	}
 	
 	
