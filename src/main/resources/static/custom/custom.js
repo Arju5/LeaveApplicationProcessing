@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+	//$('#employee').DataTable();
 	//alert('HI');
 
 	/*$("div").click(function() {
@@ -12,20 +13,24 @@ $(document).ready(function() {
 function approveleave(id) {
 	//alert(id);
 	var comment = $('#comment').val();
+	var session = $('#session').val();
+	var testurl = "http://localhost:8080/manager/"+session+"/approveleave/"+id+"/"+comment;
 	if(comment == ""){
 		comment = null;
 	}
-	alert(comment);
+	//alert(comment);
+	//alert(testurl);
+	//alert(session);
 	$.ajax({
 		cache: false,
-		url: "http://localhost:8080/manager/{username}/approveleave/"+id+"/"+comment,
+		url: "http://localhost:8080/manager/"+session+"/approveleave/"+id+"/"+comment,
 		beforeSend: function () {
 
 		},
 		success: function (result) {
 			if (result != null) {
 				alert("Successfully Approved")
-				window.location.href = "/manager/{username}/viewappliedlist";
+				window.location.href = "/manager/"+session+"/viewappliedlist";
 			}
 			else {
 				alert("Fail");
@@ -39,7 +44,7 @@ function approveleave(id) {
 
 function cancelleave(id) {
 	//alert(id);
-
+	var session = $('#session').val();
 	var comment = $('#comment').val();
 	if( comment == "")
 	{
@@ -48,14 +53,14 @@ function cancelleave(id) {
 	else{
 		$.ajax({
 			cache: false,
-			url: "http://localhost:8080/manager/{username}/cancelleave/"+id+"/"+comment,
+			url: "http://localhost:8080/manager/"+session+"/cancelleave/"+id+"/"+comment,
 			beforeSend: function () {
 
 			},
 			success: function (result) {
 				if (result != null) {
 					alert("Successfully Rejected!")
-					window.location.href = "/manager/{username}/viewappliedlist";
+					window.location.href = "/manager/"+session+"/viewappliedlist";
 				}
 				else {
 					alert("Fail");
@@ -73,7 +78,7 @@ function searchEmployee() {
 	//alert(id);
 	var startdate = $('#startdate').val();
 	var enddate = $('#enddate').val();
-	
+
 	$.ajax({
 		cache: false,
 		url: "http://localhost:8080/manager/{username}/leaveperiod/"+startdate+"/"+enddate,
@@ -83,7 +88,7 @@ function searchEmployee() {
 		success: function (result) {
 			if (result != null) {
 				alert("Successfully Displayed")
-				//window.location.href = "/user/{username}/updateleave/(username = ${session.username})";
+				//window.location.href = "/manager/{username}/viewappliedlist";
 				console.log("SUCCESS : ", result);
 				$('#elist').empty().append(result);
 			}
@@ -99,7 +104,7 @@ function searchEmployee() {
 
 function updateleave(id) {
 	alert(id);
-	//var userId=$('#userId').val();
+	var userId=$('#userId').val();
 	var leavetype = $('#leavetype').val();
 	var leaveStartDate = $('#leaveStartDate').val();
 	var leaveEndDate = $('#leaveEndDate').val();
@@ -109,11 +114,11 @@ function updateleave(id) {
 
 	var leavetoUpdate = {
 			"id" : id,
-			//"userId": userId,
+			"userId": userId,
 			"leaveType" : leavetype,
 			"leaveStartDate" : leaveStartDate,
 			"leaveEndDate" : leaveEndDate,
-			"leaveReason" : leaveReason
+			"leaveReason" : leaveReason,
 //			"standInStaff" : standInStaff
 	}
 
@@ -130,13 +135,18 @@ function updateleave(id) {
 
 		},
 		success : function(result) {
-			if (result != null) {
+			console.log(result);
+			if (result == "success") {
 				alert("Successfully Updated!")
-				//window.location.href = "/manager/{username}/viewappliedlist";
+				window.location.href = "/user/{username}/leavelist";
 			} else {
 				alert("Fail");
 			}
 		},
+		error : function(e) {
+	        alert("Error!")
+	        console.log("ERROR: ", e);
+	      },
 		complete : function() {
 
 		}

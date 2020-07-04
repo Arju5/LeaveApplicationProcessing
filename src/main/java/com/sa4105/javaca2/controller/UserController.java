@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sa4105.javaca2.model.Leave;
 import com.sa4105.javaca2.model.LeaveSession;
 import com.sa4105.javaca2.model.LeaveStatus;
@@ -135,9 +138,9 @@ public class UserController {
 		return "LeaveDetails";
 	}
 
+	
 	@RequestMapping(value = "/{username}/updateleave", method = RequestMethod.POST)
-	public String UpdateLeave(@PathVariable("username") String username, @RequestBody LeaveUpdate leaveUpdate,
-			HttpServletRequest request) {
+	public @ResponseBody String UpdateLeave(@PathVariable("username") String username, @RequestBody LeaveUpdate leaveUpdate) {
 		System.out.println("Leave Update with Json");
 		Leave l = lservice.findLeaveById(leaveUpdate.id);
 		l.getLeaveType().setLeaveTypeName(leaveUpdate.leaveType);
@@ -150,8 +153,17 @@ public class UserController {
 		lservice.editLeave(l);
 		lservice.updatedLeaveApplication(l);
 		System.out.println("Saved");
-
-		return "forward:/user/{username}/leavelist";
+		
+		ObjectMapper om = new ObjectMapper();
+		String ss = null;
+		try {
+			ss = om.writeValueAsString("success");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return ss;
+		//return "forward:/user/{username}/leavelist";
 	}
 	
 	@RequestMapping(value = "/{username}/deleteLeave/{id}")

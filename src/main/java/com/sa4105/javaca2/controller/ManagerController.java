@@ -73,23 +73,11 @@ public class ManagerController {
 		if (session.getAttribute("role").equals("Manager")) {
 			int appliedCount = lservice.countLeaveByLeaveStatus(LeaveStatus.APPLIED);
 			int approvedCount = lservice.countLeaveByLeaveStatus(LeaveStatus.APPROVED);
-			List<Leave> llist = new ArrayList<Leave>();
+			//List<Leave> llist = new ArrayList<Leave>();
 			model.addAttribute("pendingleavecount",appliedCount);
 			model.addAttribute("approvedleavecount",approvedCount);
-			
-			LocalDate apply_date;
-			apply_date = LocalDate.of(2020, 07, 01);
-			List<Leave> leavelist = lservice.getLeavebyApplyDate(apply_date);
-			for (Iterator<Leave> leave = leavelist.iterator(); leave.hasNext();) {
-				Leave l = (Leave) leave.next();
-				System.out.println(l.getLeaveStatus());
-				if(l.getLeaveStatus() != LeaveStatus.APPLIED) {
-					llist.add(l);
-				}
-			}
-			System.out.println("Checker");
-			model.addAttribute("elist",llist);
-			System.out.println("Today Leaves - " + lservice.getLeavebyApplyDate(apply_date));
+			List<Leave> leavehistory = lservice.getLeaveHistory();
+			model.addAttribute("elist",leavehistory);
 			return "indexManager";
 		}
 		else 

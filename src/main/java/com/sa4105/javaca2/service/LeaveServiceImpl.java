@@ -126,6 +126,13 @@ public class LeaveServiceImpl implements LeaveService {
 		List<Leave> leavelist = lrepo.findLeavebyApplyDate(applyDate);
 		return leavelist;
 	}
+	
+	@Override
+	public List<Leave> getLeaveHistory() {
+		// TODO Auto-generated method stub
+		List<Leave> leavelist = lrepo.findLeaveHistory();
+		return leavelist;
+	}
 
 	/*
 	 * @Override public List<Long> findLeaveDuration(LeaveStatus status) { // TODO
