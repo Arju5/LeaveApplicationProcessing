@@ -88,6 +88,9 @@ public class DBSeeder {
 	LeaveBalance leaveBalance7 = new LeaveBalance(user4, leavetype1, 60);
 	LeaveBalance leaveBalance8 = new LeaveBalance(user4, leavetype2, 12);
 	LeaveBalance leaveBalance9 = new LeaveBalance(user4, leavetype3, (long) 2.5);
+	LeaveBalance leaveBalance10 = new LeaveBalance(user3, leavetype7, leavetype7.getMaxLeaveDuration());
+	LeaveBalance leaveBalance11 = new LeaveBalance(user3, leavetype8, leavetype8.getMaxLeaveDuration());
+	LeaveBalance leaveBalance12 = new LeaveBalance(user3, leavetype9, 3.5);
 	PublicHoliday publicholiday1 = new PublicHoliday("Christmas",LocalDate.of(2020, 12, 25));
 	PublicHoliday publicholiday2 = new PublicHoliday("National Day",LocalDate.of(2020, 8, 10));
 	PublicHoliday publicholiday3 = new PublicHoliday("Labor Day",LocalDate.of(2020, 4, 01));
@@ -105,6 +108,7 @@ public class DBSeeder {
 		ltservice.createLeaveType(leavetype6);
 		ltservice.createLeaveType(leavetype7);
 		ltservice.createLeaveType(leavetype8);
+		ltservice.createLeaveType(leavetype9);
 		uservice.createUser(user1);
 		uservice.createUser(user2);
 		uservice.createUser(user3);
@@ -127,7 +131,9 @@ public class DBSeeder {
 		phservice.createPublicHoliday(publicholiday1);
 		phservice.createPublicHoliday(publicholiday2);
 		phservice.createPublicHoliday(publicholiday3);
-		
+		lbservice.createLeaveBalance(leaveBalance10);
+		lbservice.createLeaveBalance(leaveBalance11);
+		lbservice.createLeaveBalance(leaveBalance12);
 		user = new User();
 		return "forward:/";
 	}
