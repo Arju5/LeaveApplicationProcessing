@@ -132,8 +132,11 @@ public class UserController {
 				model.addAttribute("leave",	leave);
 				return "leaveform";
 			}	
-		} else {
+		} else if (leaveduration > 0){
 			model.addAttribute("errormessage", "Input leave period cannot be more than the available Leave balance");
+			return "forward:/user/" + leave.getUser().getUsername() + "/leave";
+		} else {
+			model.addAttribute("errormessage", "Leave period is invalid.");
 			return "forward:/user/" + leave.getUser().getUsername() + "/leave";
 		}
 		
