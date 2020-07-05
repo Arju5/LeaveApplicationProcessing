@@ -17,5 +17,5 @@ public interface LeaveBalanceService {
 	public ArrayList<LeaveBalance> findLeaveBalanceByUser(User user);
 	public void ReduceLeaveBalanceQty(int leavetypeid, int userid, double days);
 	public LeaveBalance findLeaveBalanceByUsernameAndLeaveType(String username,String leaveTypeName);
-	public LeaveBalance findLeaveBalanceByUserIdandRoleId(int userid, int leavetypeid);
+	public LeaveBalance findLeaveBalanceByUserIdandLeaveTypeId(int userid, int leavetypeid);
 }

@@ -84,7 +84,7 @@ public class LeaveBalanceServiceImpl implements LeaveBalanceService {
 	}
 
 	@Override
-	public LeaveBalance findLeaveBalanceByUserIdandRoleId(int userid, int leavetypeid) {
+	public LeaveBalance findLeaveBalanceByUserIdandLeaveTypeId(int userid, int leavetypeid) {
 		System.out.println(" List of Leave Balances - "+lbrepo.findLeaveBalance(leavetypeid, userid));
 		if (lbrepo.findLeaveBalance(leavetypeid, userid) != null ) {
 			return lbrepo.findLeaveBalance(leavetypeid, userid);
