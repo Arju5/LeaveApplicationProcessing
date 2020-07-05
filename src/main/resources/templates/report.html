@@ -80,7 +80,7 @@
 		</tr>
 		<tr th:each="leave:${leaves}">
 			<td th:text=${leave.id}></td>
-			<td th:text=${leave.firstName}></td>
+			<td th:text=${leave.user.firstName}></td>
 			<td th:text=${leave.role.roleName}></td>
 			<td th:text=${leave.leaveType.leaveTypeName}></td>
 			<td th:text=${leave.leaveStartDate}></td>
