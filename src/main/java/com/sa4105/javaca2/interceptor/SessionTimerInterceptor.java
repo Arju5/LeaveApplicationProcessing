@@ -35,7 +35,7 @@ public class SessionTimerInterceptor extends HandlerInterceptorAdapter {
                 response.sendRedirect("/logout");
             }
         }else {
-        	log.info("Current path is {}",  request.getContextPath());
+        	log.info("Current path is {}",  request.getRequestURI());
         	log.info("User not logged in yet, redirecting to login page");
         	response.sendRedirect("/");
         }
