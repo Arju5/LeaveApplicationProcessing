@@ -11,11 +11,17 @@
 	th:href="@{/assets/css/demo_1/style.css}" />
 <link rel="stylesheet" href="../../custom/custom.css"
 	th:href="@{/custom/custom.css}" />
-    <title>Admin Dashboard</title>
+    <title>Manager Report</title>
 </head>
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
-    	<h1>Report Page</h1>
+	<div class="main-panel">
+          <div class="content-wrapper">
+             <div class="row">
+              <div class="col-lg-8 grid-margin stretch-card">
+              	 <div class="card">
+                  <div class="card-body">
+    	<h1>Report Generator</h1>
     	<p th:text="#{report.welcome}">This is the report page</p>
     	<table class="w3-container1">
 			<tr>
@@ -24,7 +30,8 @@
 				<td>End Date</td>
 			</tr>
 			<tr>
-				<td>Report TimeLine(Not Inclusive for End Date Data)</td>
+				<td>Report TimeLine</td>
+<!-- 				above is Not Inclusive for End Date Data) -->
 				<td><input type = "date" id = "start" name = "report-start-date"></td>
 				<td><input type = "date" id = "end" name = "report-end-date"></td>
 			</tr>
@@ -62,7 +69,9 @@
 		</table>
 		<br>
     	<table class="w3-container2">
+<!--     	th:if="${not #lists.isEmpty(leaves)}" -->
     	<tr>
+    		<td>Id</td>
 			<td>Name</td>
 			<td>Role</td>
 			<td>Leave Type</td>
@@ -70,11 +79,20 @@
 			<td>End Date</td>
 		</tr>
 		<tr th:each="leave:${leaves}">
-			<td th:text=${leave.leaveid}>Id</td>
-			<td th:text=${leave.firstName}>Name</td>
+			<td th:text=${leave.id}></td>
+			<td th:text=${leave.user.firstName}></td>
+			<td th:text=${leave.role.roleName}></td>
+			<td th:text=${leave.leaveType.leaveTypeName}></td>
+			<td th:text=${leave.leaveStartDate}></td>
+			<td th:text=${leave.leaveEndDate}></td>
 		</tr>
 		</table>
-		
+		                  </div>
+                </div>
+              </div>
+          </div>
+		</div>
+		</div>
 		<div th:replace="fragments/general.html :: footer"></div>
 	</body>
 	
