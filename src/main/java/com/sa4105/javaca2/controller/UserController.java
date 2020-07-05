@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sa4105.javaca2.model.Leave;
 import com.sa4105.javaca2.model.LeaveBalance;
@@ -108,17 +107,18 @@ public class UserController {
 		System.out.println(lservice.getLeaveDuration(leave));
 		Double leaveduration = lservice.getLeaveDuration(leave);
 		LeaveBalance leavebalance =  lbservice.findLeaveBalanceByUserIdandLeaveTypeId(leave.getUser().getId(), leave.getLeaveType().getId());
-		if (leaveduration <= leavebalance.getLeaveQuantity()) {
-			System.out.println("The leave duration is - leaveduration");
-			System.out.println("Leave Type name" + leave.getLeaveType().getLeaveTypeName());
+		if (leaveduration <= leavebalance.getLeaveQuantity() && leaveduration > 0) {
+			System.out.println("The leave duration is - " + leaveduration);
+			System.out.println("Leave Type name " + leave.getLeaveType().getLeaveTypeName());
 			System.out.println(" Fraction - " + leaveduration%1);
-			if(bindingResult.hasErrors() || leaveduration == 0.0 || ((leave.getLeaveTypeName() != "Compensation" && (leaveduration%1) != 0))) {
+			System.out.println((!(leave.getLeaveType().getLeaveTypeName().equals("Compensation")) && (leaveduration%1) != 0));
+			if(bindingResult.hasErrors() || leaveduration == 0.0 || ((!(leave.getLeaveType().getLeaveTypeName().equals("Compensation")) && (leaveduration%1) != 0))) {
 				model.addAttribute("errormessage", "Select proper input Date and Session");
 				return "forward:/user/" + leave.getUser().getUsername() + "/leave";
 			}
 			System.out.println("Before Leave Balance");
 			
-			if (leave.getLeaveType().getLeaveTypeName() == "Compensation") {
+			if (leave.getLeaveType().getLeaveTypeName().equals("Compensation")) {
 				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()-leaveduration);
 			} else {
 				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()-Math.abs(leaveduration));
@@ -135,8 +135,11 @@ public class UserController {
 				model.addAttribute("leave",	leave);
 				return "leaveform";
 			}	
-		} else {
+		} else if (leaveduration > 0){
 			model.addAttribute("errormessage", "Input leave period cannot be more than the available Leave balance");
+			return "forward:/user/" + leave.getUser().getUsername() + "/leave";
+		} else {
+			model.addAttribute("errormessage", "Leave period is invalid.");
 			return "forward:/user/" + leave.getUser().getUsername() + "/leave";
 		}
 		
@@ -163,15 +166,16 @@ public class UserController {
 		return "LeaveDetails";
 	}
 
-	
 	@RequestMapping(value = "/{username}/updateleave", method = RequestMethod.POST)
-	public String UpdateLeave(@PathVariable("username") String username, @RequestBody LeaveUpdate leaveUpdate,
-			HttpSession session,HttpServletRequest request) {
-		System.out.println("Leave Update with Json");
-		int roleid = (int)session.getAttribute("roleid");
+	public @ResponseBody String UpdateLeave(@PathVariable("username") String username, @RequestBody LeaveUpdate leaveUpdate,
+			HttpSession session) {
 		
+		System.out.println("Leave Update with Json");
+		
+		int roleid = (int)session.getAttribute("roleid");
 		LeaveType ltype = ltservice.findLeaveTypeByNameandRoleId(leaveUpdate.leaveType, roleid);
 		System.out.println("Ltype::  "+ltype.getId());
+		
 		Leave l = lservice.findLeaveById(leaveUpdate.id);
 		l.setLeaveType(ltype);
 		l.setLeaveStartDate(leaveUpdate.leaveStartDate);
@@ -191,19 +195,18 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return ss;
-		//return "forward:/user/{username}/leavelist";
 	}
 	
 	@RequestMapping(value = "/{username}/deleteLeave/{id}")
-	public String deleteLeave(@PathVariable("id") Integer id) {
+	public String deleteLeave(@PathVariable("username") String username,@PathVariable("id") Integer id) {
 		lservice.deletedLeaveApplication(lservice.findLeaveById(id));
-		return "forward:/user/{username}/leavelist";
+		return "forward:/user/" + username+ "/leavelist";
 	}
 
 	@RequestMapping(value = "/{username}/cancelLeave/{id}")
-	public String cancelLeave(@PathVariable("id") Integer id) {
+	public String cancelLeave(@PathVariable("username") String username,@PathVariable("id") Integer id) {
 		lservice.cancelLeaveApplication(lservice.findLeaveById(id));
-		return "forward:/user/{username}/leavelist";
+		return "forward:/user/" + username+ "/leavelist";
 	}
 	
 	@GetMapping("")

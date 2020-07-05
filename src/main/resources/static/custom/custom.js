@@ -103,7 +103,8 @@ function searchEmployee() {
 }
 
 function updateleave(id) {
-	alert(id);
+//	alert(id);
+	var session =$('#session').val();
 	var userId=$('#userId').val();
 	var leavetype = $('#leavetype').val();
 	var leaveStartDate = $('#leaveStartDate').val();
@@ -114,11 +115,12 @@ function updateleave(id) {
 
 	var leavetoUpdate = {
 			"id" : id,
+			"session" : session,
 			"userId": userId,
 			"leaveType" : leavetype,
 			"leaveStartDate" : leaveStartDate,
 			"leaveEndDate" : leaveEndDate,
-			"leaveReason" : leaveReason,
+			"leaveReason" : leaveReason
 //			"standInStaff" : standInStaff
 	}
 
@@ -138,7 +140,7 @@ function updateleave(id) {
 			console.log(result);
 			if (result == "success") {
 				alert("Successfully Updated!")
-				window.location.href = "/user/{username}/leavelist";
+				window.location.href = "/user/"+session+"/leavelist";
 			} else {
 				alert("Fail");
 			}
@@ -150,6 +152,7 @@ function updateleave(id) {
 		complete : function() {
 
 		}
+
 
 	});
 }

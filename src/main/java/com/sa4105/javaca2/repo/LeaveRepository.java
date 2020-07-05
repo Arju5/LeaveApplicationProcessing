@@ -11,7 +11,9 @@ import com.sa4105.javaca2.model.LeaveStatus;
 
 
 public interface LeaveRepository extends JpaRepository<Leave, Integer> {
-	List<Leave> findByleaveStatus(LeaveStatus status);
+	
+	@Query("Select l from Leave l where l.leaveStatus = :apply OR l.leaveStatus = :update")
+	List<Leave> findStatusApplyUpdate(@Param("apply") LeaveStatus apply, @Param("update") LeaveStatus update);
 	
 	/*
 	 * @Query("Select l from Leave l where l.leaveStatus = :statusid") public

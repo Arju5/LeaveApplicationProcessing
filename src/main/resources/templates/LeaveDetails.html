@@ -35,7 +35,7 @@
 	<div class="col-12 grid-margin">
 		<div class="card">
 			<div class="card-body">
-				<input type="hidden" id="session"  th:value="${session.username}" />
+				<input type="hidden" id="session" th:value="${session.username}" />
 				<!-- <h4 class="card-title">Leave History</h4> -->
 				<form class="form-sample" action="#" th:object="${leavedetail}"
 					th:action="@{/user/{username}/updateleave/(username = ${session.username})}"
@@ -50,8 +50,8 @@
 										class="form-control">
 										<option th:each="ltype : ${ltypes}" th:value="${ltype}"
 											th:text="${ltype}"
+											th:disabled="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
 											th:selected="${leavedetail.leaveType.leaveTypeName == ltype}">
-											<!-- th:disabled="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
 										</option>
 									</select>
 								</div>
@@ -63,9 +63,9 @@
 								<label class="col-sm-3 col-form-label">Start Date</label>
 								<div class="col-sm-9">
 									<input type="date" th:value="*{leaveStartDate}"
+										th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
 										class="form-control" placeholder="dd/mm/yyyy"
 										id="leaveStartDate">
-									<!-- th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
 									<p th:if="${#fields.hasErrors('leaveStartDate')}"
 										th:errors="*{leaveStartDate}"></p>
 								</div>
@@ -79,8 +79,8 @@
 								<div class="col-sm-9">
 									<input type="text" th:value="*{leaveReason}"
 										th:field="*{leaveReason}" id="leaveReason"
+										th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
 										class="form-control">
-									<!-- th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
 								</div>
 							</div>
 						</div>
@@ -90,8 +90,8 @@
 								<div class="col-sm-9">
 									<input type="date" th:value="*{leaveEndDate}"
 										class="form-control" placeholder="dd/mm/yyyy"
+										th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
 										id="leaveEndDate">
-									<!-- th:readonly="${leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).APPLIED  OR leavedetail.leaveStatus!=T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}" -->
 									<p th:if="${#fields.hasErrors('leaveEndDate')}"
 										th:errors="*{leaveEndDate}"></p>
 								</div>
@@ -145,10 +145,16 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label for="exampleTextarea1">Comments</label>
-								<textarea th:value="*{leaveComments}"
-									th:field="*{leaveComments}" class="form-control"
-									id="leaveComment" rows="2" readonly="readonly"></textarea>
+								<div th:switch="${leavedetail.leaveComments}">
 
+									<textarea th:value="*{leaveComments}" th:case="'null'"
+										class="form-control" id="leaveComment" rows="2"
+										readonly="readonly"></textarea>
+									<textarea th:value="*{leaveComments}" th:case="*"
+										th:field="*{leaveComments}" class="form-control"
+										id="leaveComment" rows="2" readonly="readonly"></textarea>
+
+								</div>
 							</div>
 						</div>
 					</div>
@@ -157,10 +163,7 @@
 							th:onclick="|updateleave(${leavedetail.id})|"
 							th:if="${leavedetail.LeaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED OR leavedetail.LeaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
 							class="btn btn-primary btn-rounded btn-fw">Update</button>
-						<!-- th:href="@{/user/{username}/updateleave/(username = ${session.username})}+${leavedetail.id}" -->
-						<!-- <input type="submit" value="Update"
-									th:if="${leavedetail.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED OR leavedetail.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
-									class="btn btn-primary btn-rounded btn-fw" />  -->
+						
 
 						<a href="leavelist.html"
 							th:href="@{/user/{username}/cancelLeave/(username = ${session.username})}+${leavedetail.id}"

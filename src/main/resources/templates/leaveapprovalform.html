@@ -122,18 +122,17 @@
 					<button type="button" class="btn btn-success ml-2" th:if="${leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPROVED OR leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).REJECTED }"
 						style="float: right" disabled="disabled">Approve</button>
 					
-					<button type="button" class="btn btn-success ml-2" th:if="${leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED}"
+					<button type="button" class="btn btn-success ml-2" th:if="${leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED OR leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
 						style="float: right" th:onclick="|approveleave(${leave.id})|">Approve</button>
 
 					<button type="button" class="btn btn-danger" style="float: right" th:if="${leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPROVED OR leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).REJECTED }"
 						 disabled="disabled">Reject</button>
 					
-					<button type="button" class="btn btn-danger" th:if="${leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED}"
-						style="float: right" th:onclick="|approveleave(${leave.id})|">Reject</button>
+					<button type="button" class="btn btn-danger" th:if="${leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).APPLIED OR leave.leaveStatus == T(com.sa4105.javaca2.model.LeaveStatus).UPDATED}"
+						style="float: right" th:onclick="|cancelleave(${leave.id})|">Reject</button>
 
 				</form>
 				<br> <br>
-
 				<table class="table table-hover"
 					th:if="${not #lists.isEmpty(elist)}">
 					<thead>
