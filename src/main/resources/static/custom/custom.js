@@ -136,16 +136,22 @@ function updateleave(id) {
 
 		},
 		success : function(result) {
-			if (result != null) {
+			console.log(result);
+			if (result == "success") {
 				alert("Successfully Updated!")
-				//window.location.href = "/user/"+session+"/leavelist";
+				window.location.href = "/user/"+session+"/leavelist";
 			} else {
 				alert("Fail");
 			}
 		},
+		error : function(e) {
+	        alert("Error!")
+	        console.log("ERROR: ", e);
+	      },
 		complete : function() {
 
 		}
+
 
 	});
 }
