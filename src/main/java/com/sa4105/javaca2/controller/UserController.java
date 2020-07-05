@@ -194,15 +194,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/{username}/deleteLeave/{id}")
-	public String deleteLeave(@PathVariable("id") Integer id) {
+	public String deleteLeave(@PathVariable("username") String username,@PathVariable("id") Integer id) {
 		lservice.deletedLeaveApplication(lservice.findLeaveById(id));
-		return "forward:/user/{username}/leavelist";
+		return "forward:/user/" + username+ "/leavelist";
 	}
 
 	@RequestMapping(value = "/{username}/cancelLeave/{id}")
-	public String cancelLeave(@PathVariable("id") Integer id) {
+	public String cancelLeave(@PathVariable("username") String username,@PathVariable("id") Integer id) {
 		lservice.cancelLeaveApplication(lservice.findLeaveById(id));
-		return "forward:/user/{username}/leavelist";
+		return "forward:/user/" + username+ "/leavelist";
 	}
 	
 	@GetMapping("")
