@@ -28,6 +28,10 @@ public class LeaveServiceImpl implements LeaveService {
 	@Autowired
 	private PublicHolidayRepository phrepo;
 	
+	@Autowired
+	EmailImpl emailimpl;
+	
+	
 	@Override
 	public ArrayList<Leave> findAll() {
 		ArrayList<Leave> list = (ArrayList<Leave>)lrepo.findAll();
@@ -93,6 +97,7 @@ public class LeaveServiceImpl implements LeaveService {
 	public void approvedLeaveApplication(Leave leave) {
 		// TODO Auto-generated method stub
 		leave.setLeaveStatus(LeaveStatus.APPROVED);
+		emailimpl.sendApprovedEmail(leave);
 		lrepo.save(leave);
 	}
 
