@@ -107,17 +107,18 @@ public class UserController {
 		System.out.println(lservice.getLeaveDuration(leave));
 		Double leaveduration = lservice.getLeaveDuration(leave);
 		LeaveBalance leavebalance =  lbservice.findLeaveBalanceByUserIdandLeaveTypeId(leave.getUser().getId(), leave.getLeaveType().getId());
-		if (leaveduration <= leavebalance.getLeaveQuantity()) {
-			System.out.println("The leave duration is - leaveduration");
-			System.out.println("Leave Type name" + leave.getLeaveType().getLeaveTypeName());
+		if (leaveduration <= leavebalance.getLeaveQuantity() && leaveduration > 0) {
+			System.out.println("The leave duration is - " + leaveduration);
+			System.out.println("Leave Type name " + leave.getLeaveType().getLeaveTypeName());
 			System.out.println(" Fraction - " + leaveduration%1);
-			if(bindingResult.hasErrors() || leaveduration == 0.0 || ((leave.getLeaveTypeName() != "Compensation" && (leaveduration%1) != 0))) {
+			System.out.println((!(leave.getLeaveType().getLeaveTypeName().equals("Compensation")) && (leaveduration%1) != 0));
+			if(bindingResult.hasErrors() || leaveduration == 0.0 || ((!(leave.getLeaveType().getLeaveTypeName().equals("Compensation")) && (leaveduration%1) != 0))) {
 				model.addAttribute("errormessage", "Select proper input Date and Session");
 				return "forward:/user/" + leave.getUser().getUsername() + "/leave";
 			}
 			System.out.println("Before Leave Balance");
 			
-			if (leave.getLeaveType().getLeaveTypeName() == "Compensation") {
+			if (leave.getLeaveType().getLeaveTypeName().equals("Compensation")) {
 				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()-leaveduration);
 			} else {
 				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()-Math.abs(leaveduration));
@@ -134,8 +135,11 @@ public class UserController {
 				model.addAttribute("leave",	leave);
 				return "leaveform";
 			}	
-		} else {
+		} else if (leaveduration > 0){
 			model.addAttribute("errormessage", "Input leave period cannot be more than the available Leave balance");
+			return "forward:/user/" + leave.getUser().getUsername() + "/leave";
+		} else {
+			model.addAttribute("errormessage", "Leave period is invalid.");
 			return "forward:/user/" + leave.getUser().getUsername() + "/leave";
 		}
 		

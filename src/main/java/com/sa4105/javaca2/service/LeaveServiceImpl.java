@@ -156,7 +156,6 @@ public class LeaveServiceImpl implements LeaveService {
 		else {
 			leaveduration = (double)ChronoUnit.DAYS.between(startDate, endDate);
 			if(leave.getStartLeaveSession() == LeaveSession.AM) {
-			    System.out.println("Total number of days between dates:" + leaveduration);
 			    if (endDate.isAfter(startDate)) {
 			    	if (leaveduration > 0 && leave.getEndLeaveSession() == LeaveSession.AM) {
 				    	leaveduration += 0.5;
@@ -164,9 +163,11 @@ public class LeaveServiceImpl implements LeaveService {
 				    	leaveduration += 1;
 				    } else if (leaveduration == 0 && leave.getEndLeaveSession() == LeaveSession.PM) {
 				    	leaveduration = 1.0;
+				    } else if ( leave.getLeaveTypeName() == "Compensation" && leave.getEndLeaveSession() == LeaveSession.AM) {
+				    	leaveduration += 0.5;
 				    }
 			    } else if (startDate.isEqual(endDate)) {
-			    	if (leave.getEndLeaveSession() == LeaveSession.AM && leave.getLeaveTypeName() == "Compensation")
+			    	if (leave.getEndLeaveSession() == LeaveSession.AM && leave.getLeaveType().getLeaveTypeName().equals("Compensation"))
 			    		leaveduration = 0.5;
 			    	else
 			    		leaveduration = 1.0;
@@ -174,6 +175,8 @@ public class LeaveServiceImpl implements LeaveService {
 			} else if (leave.getStartLeaveSession() == LeaveSession.PM && (endDate.isAfter(startDate))) { 
 				if (leave.getEndLeaveSession() == LeaveSession.PM)
 					leaveduration += 0.5;
+			} else if (leave.getEndLeaveSession() == LeaveSession.PM && leave.getLeaveType().getLeaveTypeName().equals("Compensation")) {
+				leaveduration += 0.5;
 			}
 		}
 		// Getting the list of Public Holidays
