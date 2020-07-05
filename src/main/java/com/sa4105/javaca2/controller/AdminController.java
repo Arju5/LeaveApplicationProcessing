@@ -112,6 +112,11 @@ public class AdminController {
 		System.out.println(r.getId());
 		user.setRole(r);
 		uservice.createUser(user);
+		
+		if (user.getId()==0) {
+			System.out.println("There is no user id, this is a new user");
+			
+		}
 		model.addAttribute("user",user);
 		return "redirect:/admin/{username}" + "/summary";
 	}
