@@ -15,7 +15,7 @@ public interface LeaveService {
 	public void deleteLeavebyId(Integer id);
 //	public ArrayList<Leave> findLeaveByUserid(Integer uid);
 	public Leave findLeaveById(Integer id);
-	public List<Leave> findLeaveByStatus(LeaveStatus leavestatus);
+	public List<Leave> findLeaveByStatus(LeaveStatus apply,LeaveStatus update);
 	public ArrayList<Leave> findLeaveByUserName(String username);
 	//public List<Long> findLeaveDuration(LeaveStatus leavestatus);
 	
