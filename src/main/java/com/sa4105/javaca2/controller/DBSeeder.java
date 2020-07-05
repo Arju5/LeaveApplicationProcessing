@@ -71,7 +71,7 @@ public class DBSeeder {
 	LeaveType leavetype9 = new LeaveType(role3,"Compensation");
 	User user1 = new User("1234","Khiong Kiat", "Chua",role1,"darell1");
 	User user2 = new User("1234","Yamone", "Shwe",role2,"yamone");
-	User user3 = new User("1234","Rohan", "Ninad Matre", role3,"rohan");
+	User user3 = new User("1234","Rohan", "Mhatre",role3,"rohan");
 	User user4 = new User("1234","Sheryl", "Teo", role1,"sheryl");
 	Leave leave1 = new Leave(user1, LocalDate.of(2020, 07, 02), LocalDate.of(2020, 07, 03), LocalDate.of(2020, 06, 30), "Head ache", leavetype1, LeaveSession.AM, LeaveSession.PM, LeaveStatus.APPLIED);
 	Leave leave2 = new Leave(user1, LocalDate.of(2020, 07, 06), LocalDate.of(2020, 07, 07), LocalDate.of(2020, 06, 30), "Stomach pain", leavetype2, LeaveSession.AM, LeaveSession.PM, LeaveStatus.APPLIED);
