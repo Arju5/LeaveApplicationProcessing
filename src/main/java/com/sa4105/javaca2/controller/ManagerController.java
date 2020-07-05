@@ -93,7 +93,7 @@ public class ManagerController {
 
 	@GetMapping("/{username}/viewappliedlist")
 	public String ViewPendingList(Model model) {
-		model.addAttribute("plist", lservice.findLeaveByStatus(LeaveStatus.APPLIED));
+		model.addAttribute("plist", lservice.findLeaveByStatus(LeaveStatus.APPLIED,LeaveStatus.UPDATED));
 		return "leavependinglist";
 	}
 

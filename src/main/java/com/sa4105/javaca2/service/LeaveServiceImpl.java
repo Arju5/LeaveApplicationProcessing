@@ -57,9 +57,9 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 	
 	@Override
-	public List<Leave> findLeaveByStatus(LeaveStatus status) {
+	public List<Leave> findLeaveByStatus(LeaveStatus apply,LeaveStatus update) {
 		// TODO Auto-generated method stub
-		List<Leave> list = lrepo.findByleaveStatus(status);
+		List<Leave> list = lrepo.findStatusApplyUpdate(apply, update);
 		return list;
 	}
 	
