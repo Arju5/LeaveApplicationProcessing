@@ -147,6 +147,14 @@ public class ManagerController {
 		if(id != 0) {
 			Leave leave = lservice.findLeaveById(id);
 			leave.setLeaveComments(comment);
+			Double leaveduration = lservice.getLeaveDuration(leave);
+			LeaveBalance leavebalance =  lbservice.findLeaveBalanceByUserIdandLeaveTypeId(leave.getUser().getId(), leave.getLeaveType().getId());
+			if (leave.getLeaveType().getLeaveTypeName() == "Compensation") {
+				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()+leaveduration);
+			} else {
+				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()+Math.abs(leaveduration));
+			}
+			lbservice.saveLeaveBalance(leavebalance);
 			lservice.rejectedLeaveApplication(leave);
 			return "leavependinglist";
 		}

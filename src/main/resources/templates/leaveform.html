@@ -16,6 +16,7 @@
 </head>
 <body>
 	<header th:insert="fragments/general.html :: header"></header>
+	<div th:if="${errormessage}" th:text="${errormessage}" th:class="${'alert ' + 'alert-danger'}"></div>
 	<div class="card">
 		<div class="card-body">
 			<h2 class="approveformhead">Apply Leave</h2>

@@ -36,7 +36,9 @@
 									<div
 										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Annual
 										Leave</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:utext=${leavebalanceAnnual}
+												th:if="not ${session.username == null}">18</div>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -55,7 +57,9 @@
 									<div
 										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Medical
 										Leave</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">60</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:utext=${leavebalanceMedical}
+												th:if="not ${session.username == null}">60</div>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -73,7 +77,9 @@
 									<div
 										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Compensation
 										Leave</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"
+												th:utext=${leavebalanceCompensation}
+												th:if="not ${session.username == null}">8</div>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-comments fa-2x text-gray-300"></i>

@@ -44,7 +44,7 @@
 		  </div>
 		  <a style="float:right" href="#contact" th:href="@{/}" th:if="${session.username == null}">Login</a>
 	  	  <a style="float:right" href="#contact" th:href="@{/logout}" th:unless="${session.username == null}">Logout</a>
-	  	  <a style="float:right" href="account.html" th:utext="'Welcome ' + ${session.username}" th:if="not ${session.username == null}">Username</a>   
+	  	  <a style="float:right" href="#home"  th:href="@{/user/{username}(username = ${session.username})}" th:utext="'Welcome ' + ${session.username}" th:if="not ${session.username == null}">Username</a>   
 		  
 		</div>
 	</header>

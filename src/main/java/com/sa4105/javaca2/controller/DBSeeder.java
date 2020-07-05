@@ -109,7 +109,7 @@ public class DBSeeder {
 		ltservice.createLeaveType(leavetype7);
 		ltservice.createLeaveType(leavetype8);
 		ltservice.createLeaveType(leavetype9);
-		
+
 		uservice.createUser(user1);
 		uservice.createUser(user2);
 		uservice.createUser(user3);
@@ -137,7 +137,9 @@ public class DBSeeder {
 		phservice.createPublicHoliday(publicholiday1);
 		phservice.createPublicHoliday(publicholiday2);
 		phservice.createPublicHoliday(publicholiday3);
-		
+		lbservice.createLeaveBalance(leaveBalance10);
+		lbservice.createLeaveBalance(leaveBalance11);
+		lbservice.createLeaveBalance(leaveBalance12);
 		user = new User();
 		return "forward:/";
 	}

@@ -31,5 +31,6 @@ public interface LeaveService {
 	public List<Leave> getLeavebyApplyDate(LocalDate applyDate);
 	public List<Leave> getLeaveHistory();
 
+	public double getLeaveDuration(Leave leave);
 
 }
