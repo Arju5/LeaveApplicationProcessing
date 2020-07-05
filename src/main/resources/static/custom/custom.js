@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-	//$('#employee').DataTable();
 	//alert('HI');
 
 	/*$("div").click(function() {
@@ -123,13 +122,13 @@ function updateleave(id) {
 	}
 
 //	var leave =  JSON.stringify(leavetoUpdate);
-
+	alert("Updating "+id);
 	$.ajax({
 		type : "POST",
 		accept : 'application/json',
 		contentType : 'application/json',
 		dataType : 'json',
-		url :"http://localhost:8080/user/{username}/updateleave",
+		url :"http://localhost:8080/user/"+session+"/updateleave",
 		data : JSON.stringify(leavetoUpdate),
 		beforeSend : function() {
 
