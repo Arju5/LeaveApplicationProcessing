@@ -34,6 +34,7 @@ public class LoginController {
 	@PostMapping("")
 	public String login2(@ModelAttribute ("user") User user, HttpSession session) {
 		System.out.println("This is the PostMapping at HomePage");
+		//System.out.println(user.getUsername());
 		user = uservice.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 		if (user != null) {
 			System.out.println(user.getUsername());

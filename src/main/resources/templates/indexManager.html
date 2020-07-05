@@ -15,61 +15,37 @@
 </head>
 <body>
 	<header th:insert="fragments/general.html :: header"> </header>
-        <!-- partial -->
-        <div class="main-panel">
-          <div class="content-wrapper">
-            <!-- Page Title Header Starts-->
-            <div class="row page-title-header">
-              <div class="col-12">
-                <div class="page-header">
-                  <h4 class="page-title">Manager Dashboard</h4>
-                  <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
-                    <ul class="quick-links">
-                      <!--<li><a href="#">ICE Market data</a></li>
-                      <li><a href="#">Own analysis</a></li>
-                      <li><a href="#">Historic market data</a></li>
-                    </ul>
-                    <ul class="quick-links ml-auto">
-                      <li><a href="#">Settings</a></li>
-                      <li><a href="#">Analytics</a></li>
-                      <li><a href="#">Watchlist</a></li>-->
-                    </ul>
-                  </div>
-                </div>
-              </div>
-                          <section id="content2-8" class="content2-8">
-                              <div class="container">
-                                  <div class="row">
-                                      <div class="col-md-3 text-center">
-                                          <div class="single-content text-center">
-                                              <div class="item-icon"><!--<i class="fa fa-users">--></div>
-                                              <div class="item-text">
-                                                  <h3 th:utext="${pendingleavecount}">20</h3>
-                                                  <p>Requests Pending</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3 text-center">
-                                          <div class="single-content text-center">
-                                              <div class="item-icon"><!--<i class="fa fa-graduation-cap">--></div>
-                                              <div class="item-text">
-                                                  <h3 th:utext="${approvedleavecount}">2</h3>
-                                                  <p>Approved Leaves</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3 text-center">
-                                          <div class="single-content text-center">
-                                              <div class="item-icon"><!--<i class="fa fa-graduation-cap">--></div>
-                                              <div class="item-text">
-                                                  <h3 th:utext="${approvedleavecount}">2</h3>
-                                                  <p>Staffs on Leave (this is still static)</p>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div><!-- end row -->
-                              </div><!-- end container -->
-                          </section>
+	<!-- partial -->
+	<!-- <div class="main-panel"> -->
+	<div class="content-wrapper">
+		<!-- Page Title Header Starts-->
+		<div class="row page-title-header">
+			<div class="col-12">
+				<div class="page-header">
+					<h4 class="approveformhead" style="background: gray">Manager
+						Dashboard</h4>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Annual Leave card example -->
+				<div class="col-md-6 mb-4">
+					<div class="card border-left-primary shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
+									<div
+										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Request
+										Pending</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"
+										th:utext="${pendingleavecount}">18</div>
+								</div>
+								<div class="col-auto">
+									<i class="fas fa-comments fa-2x text-gray-300"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				<!-- Medical Leave Card Example -->
 				<div class="col-md-6 mb-4">
@@ -78,8 +54,10 @@
 							<div class="row no-gutters align-items-center">
 								<div class="col mr-2">
 									<div
-										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Employee on Leave</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800" th:utext="${approvedleavecount}">60</div>
+										class="text-xs font-weight-bold text-warning text-uppercase mb-1">Employee
+										on Leave</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"
+										th:utext="${approvedleavecount}">60</div>
 								</div>
 								<div class="col-auto">
 									<i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -89,7 +67,7 @@
 					</div>
 				</div>
 				<!-- Compensation Leave Card Example -->
-				
+
 			</div>
 
 			<div class="col-lg-12 grid-margin stretch-card">
@@ -104,6 +82,7 @@
 									<th>Employee Name</th>
 									<th>Applied Date</th>
 									<th>Status</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -113,6 +92,9 @@
 									<td th:text=${employee.applyLeaveDate}>23/05/2020</td>
 									<td th:text=${employee.leaveStatus}><label
 										class="badge badge-danger">Pending</label></td>
+									<td><a href="leavedetails.html"
+										th:href="@{/manager/{username}/leaveapprovalform/(username = ${session.username})}+${employee.Id}">View
+											Details</a></td>
 
 								</tr>
 							</tbody>

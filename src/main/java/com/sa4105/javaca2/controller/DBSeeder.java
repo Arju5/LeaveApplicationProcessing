@@ -1,6 +1,5 @@
 package com.sa4105.javaca2.controller;
 
-
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +93,7 @@ public class DBSeeder {
 	PublicHoliday publicholiday1 = new PublicHoliday("Christmas",LocalDate.of(2020, 12, 25));
 	PublicHoliday publicholiday2 = new PublicHoliday("National Day",LocalDate.of(2020, 8, 10));
 	PublicHoliday publicholiday3 = new PublicHoliday("Labor Day",LocalDate.of(2020, 4, 01));
-
+	
 	@GetMapping("")
 	public String Main(@ModelAttribute("user") User user) {
 		rservice.createRole(role1);
@@ -108,6 +107,8 @@ public class DBSeeder {
 		ltservice.createLeaveType(leavetype6);
 		ltservice.createLeaveType(leavetype7);
 		ltservice.createLeaveType(leavetype8);
+		ltservice.createLeaveType(leavetype9);
+
 		uservice.createUser(user1);
 		uservice.createUser(user2);
 		uservice.createUser(user3);
@@ -118,6 +119,7 @@ public class DBSeeder {
 		lservice.createLeave(leave4);
 		lservice.createLeave(leave5);
 		lservice.createLeave(leave6);
+		
 		lbservice.createLeaveBalance(leaveBalance1);
 		lbservice.createLeaveBalance(leaveBalance2);
 		lbservice.createLeaveBalance(leaveBalance3);
@@ -130,10 +132,13 @@ public class DBSeeder {
 		lbservice.createLeaveBalance(leaveBalance10);
 		lbservice.createLeaveBalance(leaveBalance11);
 		lbservice.createLeaveBalance(leaveBalance12);
+
 		phservice.createPublicHoliday(publicholiday1);
 		phservice.createPublicHoliday(publicholiday2);
 		phservice.createPublicHoliday(publicholiday3);
-		
+		lbservice.createLeaveBalance(leaveBalance10);
+		lbservice.createLeaveBalance(leaveBalance11);
+		lbservice.createLeaveBalance(leaveBalance12);
 		user = new User();
 		return "forward:/";
 	}

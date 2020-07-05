@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sa4105.javaca2.model.Leave;
+import com.sa4105.javaca2.model.LeaveBalance;
 import com.sa4105.javaca2.model.LeaveSession;
 import com.sa4105.javaca2.model.LeaveStatus;
+import com.sa4105.javaca2.model.LeaveType;
 import com.sa4105.javaca2.model.LeaveUpdate;
 import com.sa4105.javaca2.model.User;
 import com.sa4105.javaca2.service.LeaveBalanceService;
@@ -65,10 +70,8 @@ public class UserController {
 
 		if (user.getUsername().equals(username)) {
 			model.addAttribute("leaves", lservice.findLeaveByUserName(username));
-			model.addAttribute("leavebalanceAnnual",
-					lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Annual").getLeaveQuantity());
-			model.addAttribute("leavebalanceMedical",
-					lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Medical").getLeaveQuantity());
+			model.addAttribute("leavebalanceAnnual", Math.round(lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Annual").getLeaveQuantity()));
+			model.addAttribute("leavebalanceMedical", Math.round(lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Medical").getLeaveQuantity()));
 			model.addAttribute("leavebalanceCompensation",
 					lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Compensation").getLeaveQuantity());
 			return "indexEmployee";
@@ -92,34 +95,59 @@ public class UserController {
 	@RequestMapping("/{username}/leave/save")
 	public String SaveLeave(@ModelAttribute @Valid Leave leave, BindingResult bindingResult, @PathVariable("username") String username, HttpSession session, Model model) {
 		System.out.println(bindingResult.getAllErrors());
-		if(bindingResult.hasErrors()) {
-			model.addAttribute("leave",	leave);
-			return "leaveform";
-		}
+		
 		System.out.println(leave.getStartDate());
 		leave.setLeaveStartDate(LocalDate.parse(leave.getStartDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		leave.setLeaveEndDate(LocalDate.parse(leave.getEndDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
 		leave.setApplyLeaveDate(LocalDate.now());
 		leave.setStartLeaveSession(LeaveSession.valueOf(leave.getStartSession()));
 		leave.setEndLeaveSession(LeaveSession.valueOf(leave.getEndSession()));
-		System.out.println(leave.getUser());
-		System.out.println(leave.getLeaveType().getLeaveTypeName());
 		leave.setUser((User)session.getAttribute("user"));
 		leave.setLeaveType(ltservice.findLeaveTypeByNameandRoleId(leave.getLeaveType().getLeaveTypeName(), (int)session.getAttribute("roleid")));
 		leave.setLeaveStatus(LeaveStatus.APPLIED);
-		if (lservice.createLeave(leave)) {
-			model.addAttribute("leaves", lservice.findLeaveByUserName((String)session.getAttribute("username")));
-			return "leavelist";
+		System.out.println(lservice.getLeaveDuration(leave));
+		Double leaveduration = lservice.getLeaveDuration(leave);
+		LeaveBalance leavebalance =  lbservice.findLeaveBalanceByUserIdandLeaveTypeId(leave.getUser().getId(), leave.getLeaveType().getId());
+		if (leaveduration <= leavebalance.getLeaveQuantity()) {
+			System.out.println("The leave duration is - leaveduration");
+			System.out.println("Leave Type name" + leave.getLeaveType().getLeaveTypeName());
+			System.out.println(" Fraction - " + leaveduration%1);
+			if(bindingResult.hasErrors() || leaveduration == 0.0 || ((leave.getLeaveTypeName() != "Compensation" && (leaveduration%1) != 0))) {
+				model.addAttribute("errormessage", "Select proper input Date and Session");
+				return "forward:/user/" + leave.getUser().getUsername() + "/leave";
+			}
+			System.out.println("Before Leave Balance");
+			
+			if (leave.getLeaveType().getLeaveTypeName() == "Compensation") {
+				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()-leaveduration);
+			} else {
+				leavebalance.setLeaveQuantity(leavebalance.getLeaveQuantity()-Math.abs(leaveduration));
+			}
+			lbservice.saveLeaveBalance(leavebalance);
+			if (lservice.createLeave(leave)) {
+				model.addAttribute("leaves", lservice.findLeaveByUserName((String)session.getAttribute("username")));
+				model.addAttribute("leavebalanceAnnual", Math.round(lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Annual").getLeaveQuantity()));
+				model.addAttribute("leavebalanceMedical", Math.round(lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Medical").getLeaveQuantity()));
+				model.addAttribute("leavebalanceCompensation",
+						lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Compensation").getLeaveQuantity());
+				return "leavelist";
+			} else {
+				model.addAttribute("leave",	leave);
+				return "leaveform";
+			}	
 		} else {
-			model.addAttribute("leave",	leave);
-			return "leaveform";
+			model.addAttribute("errormessage", "Input leave period cannot be more than the available Leave balance");
+			return "forward:/user/" + leave.getUser().getUsername() + "/leave";
 		}
 		
 	}
 
 	@GetMapping("/{username}/leavelist")
 	public String LeaveList(@PathVariable("username") String username, Model model) {
-
+		model.addAttribute("leavebalanceAnnual", Math.round(lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Annual").getLeaveQuantity()));
+		model.addAttribute("leavebalanceMedical", Math.round(lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Medical").getLeaveQuantity()));
+		model.addAttribute("leavebalanceCompensation",
+				lbservice.findLeaveBalanceByUsernameAndLeaveType(username, "Compensation").getLeaveQuantity());
 		model.addAttribute("leaves", lservice.findLeaveByUserName(username));
 		return "leavelist";
 	}
@@ -135,23 +163,35 @@ public class UserController {
 		return "LeaveDetails";
 	}
 
+	
 	@RequestMapping(value = "/{username}/updateleave", method = RequestMethod.POST)
 	public String UpdateLeave(@PathVariable("username") String username, @RequestBody LeaveUpdate leaveUpdate,
-			HttpServletRequest request) {
+			HttpSession session,HttpServletRequest request) {
 		System.out.println("Leave Update with Json");
+		int roleid = (int)session.getAttribute("roleid");
+		
+		LeaveType ltype = ltservice.findLeaveTypeByNameandRoleId(leaveUpdate.leaveType, roleid);
+		System.out.println("Ltype::  "+ltype.getId());
 		Leave l = lservice.findLeaveById(leaveUpdate.id);
-		l.getLeaveType().setLeaveTypeName(leaveUpdate.leaveType);
-
-		System.out.println(l.getLeaveType().getLeaveTypeName());
+		l.setLeaveType(ltype);
 		l.setLeaveStartDate(leaveUpdate.leaveStartDate);
 		l.setLeaveEndDate(leaveUpdate.leaveEndDate);
 		l.setLeaveReason(leaveUpdate.leaveReason);
-
+		//System.out.println(l.getLeaveType().getLeaveTypeName());
 		lservice.editLeave(l);
 		lservice.updatedLeaveApplication(l);
 		System.out.println("Saved");
-
-		return "forward:/user/{username}/leavelist";
+		
+		ObjectMapper om = new ObjectMapper();
+		String ss = null;
+		try {
+			ss = om.writeValueAsString("success");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return ss;
+		//return "forward:/user/{username}/leavelist";
 	}
 	
 	@RequestMapping(value = "/{username}/deleteLeave/{id}")
