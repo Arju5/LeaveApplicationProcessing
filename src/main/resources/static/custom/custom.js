@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+	//$('#employee').DataTable();
 	//alert('HI');
 
 	/*$("div").click(function() {

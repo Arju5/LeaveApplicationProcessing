@@ -182,8 +182,15 @@ public class UserController {
 		lservice.updatedLeaveApplication(l);
 		System.out.println("Saved");
 		
-		String success = "sucesss";
-		return success;
+		ObjectMapper om = new ObjectMapper();
+		String ss = null;
+		try {
+			ss = om.writeValueAsString("success");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return ss;
 		//return "forward:/user/{username}/leavelist";
 	}
 	
