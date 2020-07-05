@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+	//$('#employee').DataTable();
 	//alert('HI');
 
 	/*$("div").click(function() {
@@ -77,7 +78,7 @@ function searchEmployee() {
 	//alert(id);
 	var startdate = $('#startdate').val();
 	var enddate = $('#enddate').val();
-	
+
 	$.ajax({
 		cache: false,
 		url: "http://localhost:8080/manager/{username}/leaveperiod/"+startdate+"/"+enddate,
@@ -102,8 +103,7 @@ function searchEmployee() {
 }
 
 function updateleave(id) {
-//	alert(id);
-	var session =$('#session').val();
+	alert(id);
 	var userId=$('#userId').val();
 	var leavetype = $('#leavetype').val();
 	var leaveStartDate = $('#leaveStartDate').val();
@@ -114,12 +114,11 @@ function updateleave(id) {
 
 	var leavetoUpdate = {
 			"id" : id,
-			"session" : session,
 			"userId": userId,
 			"leaveType" : leavetype,
 			"leaveStartDate" : leaveStartDate,
 			"leaveEndDate" : leaveEndDate,
-			"leaveReason" : leaveReason
+			"leaveReason" : leaveReason,
 //			"standInStaff" : standInStaff
 	}
 
@@ -139,7 +138,11 @@ function updateleave(id) {
 			console.log(result);
 			if (result == "success") {
 				alert("Successfully Updated!")
+<<<<<<< HEAD
 				window.location.href = "/user/"+session+"/leavelist";
+=======
+				window.location.href = "/user/{username}/leavelist";
+>>>>>>> refs/remotes/origin/master
 			} else {
 				alert("Fail");
 			}

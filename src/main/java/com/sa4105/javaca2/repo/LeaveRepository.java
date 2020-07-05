@@ -62,5 +62,8 @@ public interface LeaveRepository extends JpaRepository<Leave, Integer> {
 	 @Query("Select l FROM Leave l WHERE l.applyLeaveDate >= :applyDate AND l.leaveStatus LIKE 'APPLIED'")
 	 List<Leave> findLeavebyApplyDate(@Param("applyDate") LocalDate applyDate);
 	 
+	 @Query("Select l FROM Leave l WHERE l.leaveStatus LIKE 'APPROVED' OR l.leaveStatus LIKE 'REJECTED'")
+	 List<Leave> findLeaveHistory();
+	 
 	 
 }

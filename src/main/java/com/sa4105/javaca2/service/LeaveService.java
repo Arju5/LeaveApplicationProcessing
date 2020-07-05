@@ -29,5 +29,8 @@ public interface LeaveService {
 	public int countLeaveByLeaveStatus(LeaveStatus leavestatus);
 	public void updatedLeaveApplication(Leave leave);
 	public List<Leave> getLeavebyApplyDate(LocalDate applyDate);
+	public List<Leave> getLeaveHistory();
+
+	public double getLeaveDuration(Leave leave);
 
 }
