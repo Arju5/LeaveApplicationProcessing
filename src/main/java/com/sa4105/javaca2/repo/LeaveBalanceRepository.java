@@ -24,5 +24,8 @@ public interface LeaveBalanceRepository extends JpaRepository<LeaveBalance, Inte
 	
 	@Query(value = "SELECT * FROM sa4105_java.leavebalances where leave_type_id=?0 AND user_id=?1", nativeQuery = true)
 	LeaveBalance findLeaveBalanceByNativeQuery(Integer leavetypeid, Integer userid);
+	
+	@Query("SELECT lb FROM LeaveBalance lb where lb.user = :user")
+	ArrayList<LeaveBalance> findLeaveBalanceByLeaveType (@Param("user") User user);
 
 }

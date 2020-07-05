@@ -19,4 +19,9 @@ public interface LeaveTypeRepository extends JpaRepository<LeaveType, Integer> {
 	
 	@Query("SELECT lt FROM LeaveType lt where lt.leaveTypeName = :ltname AND lt.role.Id = :roleid")
 	ArrayList<LeaveType> findLeaveTypeByNameandRoleId (@Param("ltname") String ltname, @Param("roleid") int id);
+	
+	@Query("SELECT lt FROM LeaveType lt where lt.role = :role")
+	ArrayList<LeaveType> findLeaveIdByRole (@Param("role") Role role);
+	
+	
 }

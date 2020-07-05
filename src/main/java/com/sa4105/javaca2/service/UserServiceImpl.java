@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sa4105.javaca2.model.LeaveType;
 import com.sa4105.javaca2.model.User;
 import com.sa4105.javaca2.repo.LeaveBalanceRepository;
 import com.sa4105.javaca2.repo.LeaveTypeRepository;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean createUser(User user) {
+	public boolean createUser(User user) { 
 		if (urepo.save(user)!=null) 
 			return true;
 		else

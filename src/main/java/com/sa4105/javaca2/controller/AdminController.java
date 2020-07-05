@@ -107,12 +107,13 @@ public class AdminController {
 		    user.setUsername(username);
 		    user.setPassword(password);
 		}
+		System.out.println("User id: " + user.getId());
 		System.out.println("User saving "+user.getRole().getRoleName());
 		Role r =rservice.findRoleByRoleName(user.getRole().getRoleName());
 		System.out.println(r.getId());
 		user.setRole(r);
 		uservice.createUser(user);
-		
+		System.out.println("User id: " + user.getId());
 		if (user.getId()==0) {
 			System.out.println("There is no user id, this is a new user");
 			
