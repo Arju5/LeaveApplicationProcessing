@@ -143,7 +143,8 @@ public class LeaveServiceImpl implements LeaveService {
 		System.out.println(leave.getStartLeaveSession() + " - " + leave.getEndLeaveSession());
 		System.out.println(startDate + " - " + endDate);
 		// Finding the duration of the two dates including the AM and PM
-		if(leave.getStartLeaveSession() == LeaveSession.PM && leave.getEndLeaveSession() == LeaveSession.AM && startDate.isEqual(endDate))
+		if((leave.getStartLeaveSession() == LeaveSession.PM && leave.getEndLeaveSession() == LeaveSession.AM && startDate.isEqual(endDate)) 
+				|| startDate.getDayOfWeek().getValue() > 5 || endDate.getDayOfWeek().getValue() > 5)
 			return leaveduration;
 		else {
 			leaveduration = (double)ChronoUnit.DAYS.between(startDate, endDate);
